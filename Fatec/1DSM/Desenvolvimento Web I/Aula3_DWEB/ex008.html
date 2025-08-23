@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exercício 8</title>
+    <style>
+      * {
+        font-family: calibri;
+      }
+      body{
+        background-color: rgb(243, 204, 97);
+      }
+      label{
+        font-weight: bold;
+      }
+      button{
+        border-width: 1px;
+        border-color: #888;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #444;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      input{
+        border-width: 1px;
+        border-color: #888;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #444;
+      }
+      #nome {
+        width: 200px;
+      }
+      #idade {
+        width: 50px;
+        text-align: right;
+      }
+      .linha {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div class="linha">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" value="Maria" />
+      </div>
+      <div class="linha">
+        <label for="idade">Idade</label>
+        <input type="number" value="18" name="idade" id="idade" />
+      </div>
+      <button>Enviar</button>
+    </form>
+  </body>
+</html>

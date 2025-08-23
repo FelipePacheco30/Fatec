@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemplo 2</title>
+    <style>
+      body {
+        background-color: bisque;
+        margin: 0px;
+      }
+      #container{
+        background-color: yellow;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #vermelho {
+        background-color: red;
+        height: 20px;
+        width: 50px;
+      }
+      #verde {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: green;
+        width: 50px;
+        height: 100px;
+      }
+      #azul {
+        background-color: blue;
+        height: 20px;
+        width: 50px;
+      }
+      #magenta{
+        background-color: magenta;
+        height: 20px;
+      }
+      #ciano{
+        background-color: cyan;
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="vermelho"></div>
+      <div id="verde">
+        <div id="magenta"></div>
+        <div id="ciano"></div>
+      </div>
+      <div id="azul"></div>
+    </div>
+  </body>
+</html>

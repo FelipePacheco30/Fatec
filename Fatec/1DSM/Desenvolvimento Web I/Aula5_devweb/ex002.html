@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <title>Exercício 2</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        display: flex;
+        margin: 0px;
+        height: 100vh;
+      }
+      @media (orientation: portrait) {
+        .container {
+          display: flex;
+          flex: 1; /* ocupa toda a altura/largura disponível */
+          flex-direction: column; /* utilize column para testar o layout na coluna */
+        }
+      }
+      @media (orientation: landscape) {
+        .container {
+          display: flex;
+          flex: 1; /* ocupa toda a altura/largura disponível */
+          flex-direction: row; /* utilize column para testar o layout na coluna */
+        }
+      }
+      .um {
+        flex: 1;
+        font-size: 30px;
+        background-color: lightyellow;
+      }
+      .dois {
+        flex: 1;
+        font-size: 30px;
+        background-color: lightgreen;
+      }
+      .tres {
+        flex: 1;
+        font-size: 30px;
+        background-color: lightcoral;
+      }
+      @media (max-width: 900px) {
+        .tres {
+          display: none;
+        }
+      }
+      @media (max-width: 600px) {
+        .dois {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="um">A</div>
+      <div class="dois">B</div>
+      <div class="tres">C</div>
+    </div>
+  </body>
+</html>

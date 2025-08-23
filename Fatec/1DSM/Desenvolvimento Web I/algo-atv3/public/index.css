@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+}
+
+.container {
+  margin-bottom: 2rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: self-end;
+    gap: 10px;
+}
+
+.row-input {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+  margin-bottom: 3px;
+}
+
+input {
+  padding: 0.5rem;
+  width: 250px;
+}
+button {
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+}
+.resultado {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+.erro {
+  color: red;
+}
+.ok {
+  color: blue;
+}
