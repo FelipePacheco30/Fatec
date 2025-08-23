@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+#header {
+  background: #1c62aa;
+  color: #fff;
+  padding: 16px 32px;
+  font-size: 1.8rem;
+}
+
+#container {
+  max-width: 1000px;
+  margin: 24px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 24px;
+}
+
+#title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+#title-left { display: flex; flex-direction: column; }
+#title-resultado { color: #0066b3; font-size: 1.5rem; }
+#title-concurso  { color: #555; font-size: 1rem; margin-top: 4px; }
+
+#title-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#search-input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  background: none;
+  border: none;
+  color: #0066b3;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 6px 10px;
+}
+button:hover { text-decoration: underline; }
+
+#body-row {
+  gap: 24px;
+}
+#body-left { flex: 1.2; }
+#body-right { flex: 1; }
+
+#body-row {
+  display: flex;
+  gap: 24px;
+}
+
+#body-left {
+  flex: 1.2;
+}
+
+#body-right {
+  flex: 1;
+  background-color: #f0f0f0;   
+  padding: 1rem;              
+  border-radius: 4px;         
+}
+
+#acumulou {
+  color: #0066b3;
+  margin-bottom: 12px;
+}
+#local {
+  color: #555;
+  margin-bottom: 16px;
+}
+#row-balls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ball {
+  background: #209869;
+  color: #fff;
+  font-size: 1.4rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#row-estimativa,
+.row-acumulado {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.row-acumulado div:first-child {
+  color: #555;
+}
+.row-acumulado div:last-child,
+#estimativa-premio {
+  font-weight: bold;
+  color: #555;
+}
+
+h3 {
+  color: #0066b3;
+  margin: 20px 0 8px 0;
+  font-size: 1.1rem;
+}
+.row-acerto {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #555;
+}
+#cidade-uf, #arrecadacao-total {
+  color: #555;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 1000px) {
+  #body-row {
+    flex-direction: column;
+  }
+
+  #content > * {
+    margin-bottom: 2rem;
+  }
+
+  #top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  #title-area {
+    margin-bottom: 1rem;
+  }
+  #search-area {
+    margin-bottom: 1rem;
+  }
+
+  #row-balls {
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ball {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  #container {
+    padding: 1.5rem;
+  }
+}

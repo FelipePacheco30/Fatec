@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mega-Sena</title>
+  <link rel="stylesheet" href="/styles/index.css" />
+  <script defer src="/js/index.js"></script>
+</head>
+<body onload="load()">
+
+  <div id="header">Mega-Sena</div>
+
+  <div id="container">
+    <div id="title-row">
+      <div id="title-left">
+        <div id="title-resultado">Resultado</div>
+        <div id="title-concurso">Concurso –</div>
+      </div>
+      <div id="title-right">
+        <label for="search-input">Buscar por concurso</label>
+        <input id="search-input" placeholder="Ex: 1475"
+               onkeydown="if (event.key==='Enter') load(this.value)" />
+        <button id="prior" onclick="if(currentData) load(currentData.concurso-1)">‹ Anterior</button>
+        <button id="next"  onclick="if(currentData) load(currentData.concurso+1)">Próximo ›</button>
+      </div>
+    </div>
+
+    <div id="body-row">
+      <div id="body-left">
+        <h2 id="acumulou">Acumulou!</h2>
+        <div id="local"></div>
+        <div id="row-balls">
+          <div class="ball" id="bola1"></div>
+          <div class="ball" id="bola2"></div>
+          <div class="ball" id="bola3"></div>
+          <div class="ball" id="bola4"></div>
+          <div class="ball" id="bola5"></div>
+          <div class="ball" id="bola6"></div>
+        </div>
+        <div id="row-estimativa">
+          <div>Estimativa de prêmio:</div>
+          <div id="estimativa-premio"></div>
+        </div>
+        <div class="row-acumulado">
+          <div>Acumulado próximo:</div>
+          <div id="acumulado-6-acertos"></div>
+        </div>
+        <div class="row-acumulado">
+          <div>Acumulado Mega Virada:</div>
+          <div id="acumulado-sorteio-especial-mega-da-virada"></div>
+        </div>
+      </div>
+      <div id="body-right">
+        <h3>Premiação</h3>
+        <div class="row-acerto">
+          <span>6 acertos:</span>
+          <span id="ganhadores-6-acertos"></span>
+        </div>
+        <div class="row-acerto">
+          <span>5 acertos:</span>
+          <span id="ganhadores-5-acertos"></span>
+        </div>
+        <div class="row-acerto">
+          <span>4 acertos:</span>
+          <span id="ganhadores-4-acertos"></span>
+        </div>
+        <h3>Detalhamento</h3>
+        <div id="cidade-uf"></div>
+        <h3>Arrecadação total</h3>
+        <div id="arrecadacao-total"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

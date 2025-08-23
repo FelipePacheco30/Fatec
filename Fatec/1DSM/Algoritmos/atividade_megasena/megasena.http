@@ -1,0 +1,47 @@
+### GET: Último concurso
+GET http://localhost:3002/
+Accept: application/json
+
+### GET: Concurso 2849
+GET http://localhost:3002/2849
+Accept: application/json
+
+### POST: Inserir novo concurso
+POST http://localhost:3002/
+Content-Type: application/json
+
+{
+  "concurso": 2900,
+  "data_do_sorteio": "2025-05-31T03:00:00.000Z",
+  "bola1": 11,
+  "bola2": 22,
+  "bola3": 33,
+  "bola4": 44,
+  "bola5": 55,
+  "bola6": 60,
+  "ganhadores_6_acertos": 0,
+  "cidade_uf": null,
+  "rateio_6_acertos": 0,
+  "ganhadores_5_acertos": 29,
+  "rateio_5_acertos": 62629.59,
+  "ganhadores_4_acertos": 2724,
+  "rateio_4_acertos": 952.51,
+  "acumulado_6_acertos": 6804650.96,
+  "arrecadacao_total": 31185375,
+  "estimativa_premio": 11000000,
+  "acumulado_sorteio_especial_mega_da_virada": 47003551.11,
+  "observacao": null
+}
+
+### PUT: Atualizar concurso 2900
+PUT http://localhost:3002/2900
+Content-Type: application/json
+
+{
+  "cidade_uf": "SAO PAULO/SP",
+  "estimativa_premio": 12000000
+}
+
+### DELETE: Remover concurso 2900
+DELETE http://localhost:3002/2900
+Accept: application/json
