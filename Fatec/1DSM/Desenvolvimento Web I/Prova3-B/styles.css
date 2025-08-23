@@ -1,0 +1,96 @@
+:root {
+    --primary: #4a90e2;
+    --error: #e74c3c;
+    --success: #2ecc71;
+    --bg: #f5f7fa;
+    --text: #333;
+    --radius: 6px;
+    --transition: 0.3s;
+    --font: 'Poppins', sans-serif;
+  }
+  
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  
+  body {
+    background: var(--bg);
+    font-family: var(--font);
+    color: var(--text);
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 20px;
+  }
+  
+  .form-container {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 400px; width: 100%;
+  }
+  
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    display: flex; flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  
+  .form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 4px rgba(74,144,226,0.4);
+    outline: none;
+  }
+  
+  .feedback {
+    margin-top: 5px;
+    font-size: 0.85rem;
+    height: 1em;
+    color: var(--error);
+    transition: opacity var(--transition);
+  }
+  
+  .form-group.success input {
+    border-color: var(--success);
+  }
+  .form-group.error input {
+    border-color: var(--error);
+  }
+  .form-group.success .feedback {
+    color: var(--success);
+    opacity: 1;
+  }
+  .form-group.error .feedback {
+    color: var(--error);
+    opacity: 1;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+  }
+  
+  button[type="submit"]:hover {
+    background: #357ab8;
+    transform: translateY(-2px);
+  }
+  
