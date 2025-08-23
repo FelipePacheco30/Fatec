@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Atividade</title>
+    <link rel="icon" href="https://www.cps.sp.gov.br/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/index.css" />
+    <script src="/index.js"></script>
+  </head>
+  <body>
+    <h2>Testar Operações</h2>
+
+    <!-- Cálculo do Somatório -->
+    <div class="container">
+      <h3>Somatório</h3>
+      <div class="row">
+        <div class="row-input">
+          <label for="somatorioInicio">Início</label>
+          <input id="somatorioInicio" placeholder="Ex: 1" />
+        </div>
+        <div class="row-input">
+          <label for="somatorioFim">Fim</label>
+          <input id="somatorioFim" placeholder="Ex: 10" />
+        </div>
+        <button onclick="calcularSomatorio()">Calcular</button>
+      </div>
+      <div id="somatorioResultado" class="resultado"></div>
+    </div>
+
+    <!-- Formulário da média -->
+    <div class="container">
+      <h3>Cálculo da média</h3>
+      <div class="row">
+        <div class="row-input">
+          <label for="mediaInput">Números (separados por vírgula)</label>
+          <input id="mediaInput" placeholder="Ex: 1,2.9,3" />
+        </div>
+        <button onclick="calcularMedia()">Calcular</button>
+      </div>
+      <div id="mediaResultado" class="resultado"></div>
+    </div>
+
+    <!-- Formulário do fatorial -->
+    <div class="container">
+      <h3>Cálculo do fatorial</h3>
+      <div class="row">
+        <div class="row-input">
+          <label for="fatorialInput">Número</label>
+          <input id="fatorialInput" placeholder="Ex: 5" />
+        </div>
+        <button onclick="calcularFatorial()">Calcular</button>
+      </div>
+      <div id="fatorialResultado" class="resultado"></div>
+    </div>
+
+    <!-- Verificação de Número Primo -->
+    <div class="container">
+      <h3>Verificar número primo</h3>
+      <div class="row">
+        <div class="row-input">
+          <label for="primoInput">Número</label>
+          <input id="primoInput" placeholder="Ex: 9" />
+        </div>
+        <button onclick="calcularPrimo()">Calcular</button>
+      </div>
+      <div id="primoResultado" class="resultado"></div>
+    </div>
+  </body>
+</html>
