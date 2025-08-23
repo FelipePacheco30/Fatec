@@ -1,0 +1,62 @@
+ANÁLISE DE ALGORITMOS
+
+A escolha de um algoritmo depende de vários critérios.
+
+1. Análise de Algoritmo = Uso de Recursos
+- Uso de recursos está diretamente ligado à complexidade do algoritmo.
+
+----------------------------------------------------
+2. Complexidade de Tempo
+Mede quantas instruções são executadas pelo algoritmo em função do tamanho da entrada N.
+
+- Pior caso → mais importante (garante o limite superior do desempenho).
+- Caso médio → também muito relevante, representa o comportamento “normal”.
+- Melhor caso → citado, mas com menor relevância prática.
+
+Definimos as operações básicas, cada uma tomando um tempo fixo t0 (consideramos a mais lenta como referência).
+Para simplificação, contamos apenas o número de operações.
+
+Exemplos de ordens de complexidade:
+- O(log n) → divide o problema pela metade a cada passo.
+- O(n) → cresce linearmente com a entrada.
+- O(n²) → cresce quadraticamente, menos eficiente.
+
+Regra geral: quanto menor a ordem de complexidade, mais eficiente o algoritmo.
+
+----------------------------------------------------
+3. Complexidade de Espaço (Memória)
+Mede quanto de memória o algoritmo utiliza, considerando:
+- Entrada
+- Dados auxiliares
+- Parâmetros e variáveis
+
+Fórmula geral:
+Complexidade = n + (número de espaços auxiliares alocados)
+
+----------------------------------------------------
+4. Observações Importantes
+- Quando passamos um array para uma função, não passamos o array em si, mas sim o endereço dele na memória (um número). Isso significa que a função pode alterar os valores originais do array.
+- Quando passamos um número (tipo primitivo), a função recebe apenas uma cópia desse valor, e altera somente essa cópia, sem modificar o original.
+
+----------------------------------------------------
+5. Exemplos
+- Se tivermos N elementos em uma estrutura, o custo é proporcional a N.
+- Se tivermos 10 arrays, seria:
+  10n + (número de espaços auxiliares)
+
+----------------------------------------------------
+6. Tabela Resumo de Complexidade (Big-O)
+
+Tempo de execução (ordem de crescimento):
+
+O(1)     → Constante: execução imediata, independe do tamanho da entrada.
+O(log n) → Logarítmica: problema é dividido pela metade a cada passo.
+O(n)     → Linear: cresce proporcionalmente ao tamanho da entrada.
+O(n log n) → Quase linear: comum em algoritmos de ordenação eficientes.
+O(n²)    → Quadrática: cresce rapidamente, comum em comparações duplas.
+O(2^n)   → Exponencial: extremamente custoso, inviável para entradas grandes.
+O(n!)    → Fatorial: pior dos casos, praticamente impraticável para N > 10.
+
+Regras práticas:
+- Prefira O(1), O(log n) ou O(n) quando possível.
+- Evite O(n²) ou maiores para entradas grandes.

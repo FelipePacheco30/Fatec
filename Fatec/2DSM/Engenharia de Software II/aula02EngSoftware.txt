@@ -1,0 +1,69 @@
+cad aplicação tem suas respectivas preocupações
+web - outros B.O
+mobile - sistema operacional
+desktop - uso de ram e e memoria
+
+projeto começa pelo banco de dados, com ele se define interface e outros elementos
+
+PO é crucial no desenvolvimento de software, a elicitação mal feita pode estragar o projeto
+
+
+levantamento e analise de requisitos:
+levantar os requisitos quebrar em tasks e definir oque cada um vai fazer
+resumo: OQUE FAZER?
+regras de negocios definem e mudam de acordo com o objketivo e cliente do seu software
+padaria != sistema educacional (necessitam daedos diferentres)
+requisito funcional(feature) = vira funcionalidade, função do sistema
+requisito nao funcional = oque é necesario pro funcional funcionar
+NAO EXISTE REQUISITO SEMI-ATENDIDO
+
+modelar:
+quebrar  os requisitos de forma visual e organizada para emlhor entendimento
+
+implementação:
+codar.
+
+testes e validações:
+testar testar se oque foi implementado esta de acordo e eatendentpo do requisito
+
+implatancçao
+implantar é pegar os oftware em ambiente de produção, rodar, funcionar
+
+
+manutenção
+manter o sistemwa funciuonado, se ficar obsoletto ele pé deatiuvadfo e substituido
+
+qual a diferença entre validação e verificação?
+R: Semelhantes, 
+verificar: fazer check-list se tudo que foi feito esta de acordo com o planejado, qualquer um pode fazer
+validar: validar é o aceite, somente PO, pode validar, o
+PO deve validar todas as tarefas, e explicar porque estao validadas, uma tarefa so esta pronta se estiver validada.
+
+
+
+
+
+casos de uso
+oque o sistema pode fazer e oque vai fazer cada coisa
+
+
+classes
+
+
+
+sequenbcia
+passo a passo doque voce pode realixzaqr no sistema
+acessar a tela de cadastro-fornecer os dados-clicar num botao
+
+
+professor andere cobrara teste unitario, testar funcionalidade éw necessaiuo docujentar os testes
+
+
+
+
+
+boa ideia:
+por qual user story é referente a tarefa, mis organizado e controle de quando as user stories estao completas
+ler livro UML 2 - uma abordagem pratica
+ler livro codigo limpo
+astalavista.sk (site piratao)

@@ -1,0 +1,54 @@
+Um caso de uso repredenta uma ação a ser realizada no sistema de software e não realizadas pelo usuario
+Caso de uso é a representação de uma funcionalidade do sistema
+caso de uso === requisito funvional ao implementar vira funcionalidade
+ator não é neecssariamente um usuario do sistema === perfil de usuario
+
+*Filho herda tambem os caso do pai
+
+obj pai     
+   ^
+   |
+obj filho
+   ^
+   |
+obj neto
+   
+
+generalização   ^      especiicação |  
+                |                   ^
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+talvez caia na prova: diferença de include e extends
