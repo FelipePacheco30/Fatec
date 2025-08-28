@@ -1,0 +1,27 @@
+instancia 
+soma ()
+return 3;
+apenas fiuncionara em 
+1 + 2 
+0 + 3
+-1 + 4
+
+´epossivel ter mais d eum caso base
+
+funçaio recursivas schama ela mesma 
+e no eexpemlo cham aum array nmenor
+
+
+estado paricalmente completo ou suspenso0
+
+re ursao precia atinfdir o caso base voce nao precisa estar longe dele no inicio
+recursao é usada para quebrar um problema em procblemas menores
+as vezes recursao pode ser mais simples do que loops
+
+tabela de hash == uma coisa que mapeia para um inteiro === json
+cache a um grosso modo e momtar um json e compilar os valoes er os valores que eles deveriam retornar
+
+SHA
+
+o hash é um nunmero inteiro que vai armazenar um valor 
+
