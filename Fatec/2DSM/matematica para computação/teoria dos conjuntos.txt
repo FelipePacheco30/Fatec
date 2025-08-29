@@ -61,3 +61,23 @@ basicamnete é o mesmo que unir os conjuntos
 consulta union é igual a unir selects porem ela é mais modular e reutilizavel
 select * from tb_exemplo where nome = 'fabricio'
 	select * from tb_exemplo where nome = 'pedro'
+
+
+
+union
+[x] [x] 
+
+
+join 
+
+[x][+][x]
+
+
+natural join
+[x] + [x] = [x]
+
+except
+
+
+join left
+e joiun right
