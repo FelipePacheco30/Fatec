@@ -81,3 +81,11 @@ except
 
 join left
 e joiun right
+
+
+select * from usuario where nome = 'fabricio' union 
+		 select * from usuario where nome = 'ronaldo';
+		 
+SELECT * FROM usuario NATURAL JOIN cidade;
+
+select * from usuario except select * from usuario where nome = 'fabricio';
