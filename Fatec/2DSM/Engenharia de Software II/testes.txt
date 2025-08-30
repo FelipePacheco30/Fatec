@@ -1,0 +1,27 @@
+pessoa que testa ser difernete da que implementou
+
+diagrama casos de uso
+de classes 
+de sequencia
+ e DEPOIS
+ teste unitario
+
+durante a sprint nao se pode mexer em requisito
+é permitido po requisitos durante a produçaõ de uma aplicação
+
+D efeito == quando voce cria uma situação de que daquilo poide gerar um erro
+E rro == quando essa situação acontece erro no sistema, alçgo da errado
+F alha == por cuasa do erro algo para de funcionar, trva apro usuario por exemplo
+
+uso de try 
+-
+-
+-
+except ou catch
+-
+-
+finally
+-
+-
+
+é possivel testar sem os diagramas e validar uma task sem os diagramas porem é possivel editar o teste posteriormente com os diagramas feitos e valida-lo de forma mais precisa 
