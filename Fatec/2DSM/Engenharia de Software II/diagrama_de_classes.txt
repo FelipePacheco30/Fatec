@@ -1,0 +1,8 @@
+os casos de uspo aparcem no diagram de classes como metodo
+
+mvc
+model - estruturação
+view - frontend
+controller - backend
+
+onjeto é tdo que pode ser visualizado e manipulado
