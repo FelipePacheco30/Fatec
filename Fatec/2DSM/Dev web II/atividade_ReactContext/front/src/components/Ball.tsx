@@ -1,20 +1,22 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties } from "react";
 
-interface Props {
-    value: string;
+type BallProps = {
+  value: string;
+};
+
+export default function Ball({ value }: BallProps) {
+  return <div style={ballSld}>{value}</div>;
 }
-
-export default function Ball(props:Props) {
-    return <div style={ballSld}>{props.value}</div>;
-}
-
 
 const ballSld: CSSProperties = {
-    display: "flex",
-    backgroundColor: "#20b2aa",
-    height: "60px",
-    width: "60px",
-    borderRadius: "50%",
-    justifyContent: "center",
-    alignItems: "center"
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50px",
+  height: "50px",
+  borderRadius: "50%",
+  background: "#791e85ff",
+  color: "white",
+  fontWeight: "bold",
+  fontSize: "18px",
 };
