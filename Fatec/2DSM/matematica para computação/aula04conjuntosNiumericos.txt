@@ -1,0 +1,39 @@
+teoria de comnjuntos
+
+ao utilizar conjuntos os dados nao sao homogeneos
+usar letra maiscula para conjunto === todo 
+elemento minusculla
+conjunto nao considera repetição
+conjunto nao tem ordem nem posição e pode ser qualquer coisa
+conjunto pode ser um tipo em typescript
+programção generica passar um tipo de uma clase ao fqazer uma instancia
+enumerar é colocar em sequencia
+setbuilder nao cita os elemento sdescreve as propriedades que gera os elementos
+se u === natrurais
+a/ é tudo que esta fora do conjunto a
+A = 123 
+a/ = 456
+oque importa é oque ta no A
+U é tudo = 1 == 100%
+Naturais = 1, 2 , 3 natural não inclui 0
+se incluir 0 é integrais
+closure = se o reusltado da operaco de a e b for um c e ele for do mesmo tipo e uma operação fechada
+closure = soma e multiplicação
+*em python se o indice é negativo ele percorre ao contrario
+z = inteiros n1 + n2 === n3
+Q = racionais = fuinciona divisao diferentes de inteiros e reais
+Q1 / Q2 = Q3
+E = ^
+ou = V
+não = 
+USE NUMEROZ PRE CALCULADOS E IMPORTE
+tipo em casos de dizimas periodicas
+função gertiz = 1/3
+R - tirando os racionais = irracionais
+voce olha pro sinal expoente dpos amntissa
+esa ordem e para comparar numero sem percorrer todos os digitos
+geralmenge olahnd o pro sinal ja mata 
+1 === negativo
+0 == positivo
+sempre vai ter algo diferente indepdente doi numero
+se ad iferença for entre um numero muit o grande e um muito pequeno e passar do 2^8 = 128 bits ele peder numeros no processo
