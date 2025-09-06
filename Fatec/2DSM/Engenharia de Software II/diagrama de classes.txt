@@ -1,0 +1,10 @@
+difernça entre agregação e e composição
+
+associação entre classes === apenas 2
+
+agrgação == objeto parte nao depende do todo == losangulo
+composuição == objeto parte depedne do objeto todo == losangulo preenchido
+
+private == uso dentyro da classe
+protected == uso denbtro da classe e em suas filhas
+public == publico, todos tem acesso
