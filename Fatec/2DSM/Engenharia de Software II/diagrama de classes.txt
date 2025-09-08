@@ -1,10 +1,51 @@
-difernça entre agregação e e composição
+Diagrama de Classes
 
-associação entre classes === apenas 2
+- O diagrama de classes é um dos mais importantes da UML.
+- Representa a estrutura estática do sistema: classes, atributos, métodos e relacionamentos.
+- Mostra como os elementos do sistema estão organizados e como interagem.
 
-agrgação == objeto parte nao depende do todo == losangulo
-composuição == objeto parte depedne do objeto todo == losangulo preenchido
+-------------------------------------
+Associação, Agregação e Composição
 
-private == uso dentyro da classe
-protected == uso denbtro da classe e em suas filhas
-public == publico, todos tem acesso
+1. Associação
+- Representa um relacionamento simples entre duas classes.
+- Exemplo: Aluno --- EstudaEm --- Escola.
+
+2. Agregação
+- Representa uma relação “todo-parte” em que a parte NÃO depende do todo.
+- Ou seja, os objetos podem existir independentemente.
+- Representado por um losango vazio (◊).
+- Exemplo: Departamento ◊--- Professor (um professor pode existir sem o departamento).
+
+3. Composição
+- Representa uma relação “todo-parte” em que a parte DEPENDE do todo.
+- Ou seja, se o todo for destruído, a parte também será.
+- Representado por um losango preenchido (◆).
+- Exemplo: Casa ◆--- Cômodo (se a casa deixar de existir, o cômodo também deixa).
+
+-------------------------------------
+Visibilidade dos Atributos e Métodos
+
+- private ( - ): uso apenas dentro da própria classe.
+- protected ( # ): uso dentro da classe e também em classes filhas (herança).
+- public ( + ): acesso público, disponível a todas as classes.
+
+-------------------------------------
+Casos de Uso e Classes
+
+- Os casos de uso do sistema aparecem no diagrama de classes como métodos.
+- Exemplo: Caso de uso “Cadastrar Cliente” pode aparecer na classe Cliente como método cadastrar().
+
+-------------------------------------
+Padrão MVC (Model-View-Controller)
+
+- Model: representa a estruturação dos dados (regra de negócio, lógica).
+- View: representa a interface com o usuário (frontend).
+- Controller: representa o controle da aplicação, comunicação entre Model e View (backend).
+
+-------------------------------------
+Objetos
+
+- Um objeto é a instância de uma classe.
+- É tudo aquilo que pode ser visualizado e manipulado no sistema.
+- A classe é o molde; o objeto é a realização concreta.
