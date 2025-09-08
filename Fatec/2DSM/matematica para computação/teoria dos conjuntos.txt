@@ -1,91 +1,88 @@
-Alfabeto
+===============================
+ TEORIA DOS CONJUNTOS
+===============================
 
-  3/26   23/26
-  P(C) +  P(C barrado) === 1 === 100%
+ Alfabeto
+- Probabilidade:
+  P(C) + P(C barrado) = 1 (100%)
 
-c = {a,b,c}
-_
-C = {d, e, f...}
- 
+Exemplo de conjuntos:
+- c = {a, b, c}
+- C = {d, e, f, ...}
 
-conjunto e coisas fora do conjunto é o resto
+O conjunto representa um agrupamento, e tudo fora dele é o "resto".
 
+---
 
-mandelbrot set
+ Mandelbrot Set
+- Exemplo 1:
+  A = {1, 2, 3}
+  B = {1, 3, 2}
 
-A = {1, 2, 3}
-B = {1, 3, 2}
+  → Se pegarmos qualquer elemento de A ou de B, ele também estará no conjunto oposto.
+  → Exemplo: "1" está em A e também em B, independente da ordem.
+  ✔ Ou seja: A = B
 
-se pegar qualquer x de a ou de b ele estara no cojunto oposoto
-exemplo: pegando 1 de A ele é igual a B pois b tambem possui 1, indepemdete de sua posição ou seja A = B
+- Exemplo 2:
+  A = {1, 2, 3}
+  B = {1, 3, 2, 4}
 
+  → A ⊂ B (A é subconjunto de B, pois todos os elementos de A estão em B).
+  → Mas B não é subconjunto de A.
 
+---
 
-A = {1, 2, 3}
-B = {1, 3, 2, 4}
+ Cardinalidade
+- P(A) = 2^|A|  (2 elevado à cardinalidade de A).
+- Representa o número total de subconjuntos possíveis.
 
-  - 
-A C B
+Exemplo:
+A = {Ana, Pedro, Fabrício}
+→ P(A) = 2³ = 8 subconjuntos
 
-A é um conjunto de B pois B possui todos os numeros porem b nao e conjunto de A
+Tabela de subconjuntos:
+{}  
+{Ana}  
+{Pedro}  
+{Fabrício}  
+{Ana, Pedro}  
+{Ana, Fabrício}  
+{Pedro, Fabrício}  
+{Ana, Pedro, Fabrício}  
 
-P(A) = 2^[a] = cardinalidade de a
+---
 
-numero total de resultados possiveis de uma consulta sql
+➕ União de Conjuntos (A ∪ B)
+- Une todos os elementos, sem repetição.
 
+Exemplo:
+A = {1, 2, 3}  
+B = {1, 2, 4, 7}  
+A ∪ B = {1, 2, 3, 4, 7}
 
-tabela usuario   casos possiveis 
-ana            | {} 
-pedro          | {ana}
-fabricio       | {Pedro}
-               | {Fabricio}   
-               | {A, P}    
-               | {A, F}    
-               | {P, F}    
-               | {A, P, F}     
+---
 
+ SQL e Conjuntos
+- UNION → Une os resultados de SELECTs.
+  Exemplo:
+    SELECT * FROM usuario WHERE nome = 'fabricio'
+    UNION
+    SELECT * FROM usuario WHERE nome = 'pedro';
 
-ou seja po ter 3 casos neste caso é P(A) = 2^³ === 8 casos
+- JOIN → Combina tabelas.
+  Representação:
+    [x] [+] [x]
 
+- NATURAL JOIN → Combina tabelas automaticamente pelos campos em comum.
+  Exemplo:
+    SELECT * FROM usuario NATURAL JOIN cidade;
 
-a U B
+- EXCEPT → Exclui elementos de um conjunto em relação a outro.
+  Exemplo:
+    SELECT * FROM usuario
+    EXCEPT
+    SELECT * FROM usuario WHERE nome = 'fabricio';
 
-A = {1 ,2, 3
-B = {1, 2, 4, 7}
-AUB = {1 ,2, 3, 4, 7}
+- LEFT JOIN e RIGHT JOIN → Permitem manter todos os dados de uma tabela, mesmo sem correspondência na outra.
 
-basicamnete é o mesmo que unir os conjuntos 
-
-
-
-consulta union é igual a unir selects porem ela é mais modular e reutilizavel
-select * from tb_exemplo where nome = 'fabricio'
-	select * from tb_exemplo where nome = 'pedro'
-
-
-
-union
-[x] [x] 
-
-
-join 
-
-[x][+][x]
-
-
-natural join
-[x] + [x] = [x]
-
-except
-
-
-join left
-e joiun right
-
-
-select * from usuario where nome = 'fabricio' union 
-		 select * from usuario where nome = 'ronaldo';
-		 
-SELECT * FROM usuario NATURAL JOIN cidade;
-
-select * from usuario except select * from usuario where nome = 'fabricio';
+===============================
