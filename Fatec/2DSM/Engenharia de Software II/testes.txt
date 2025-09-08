@@ -1,27 +1,47 @@
-pessoa que testa ser difernete da que implementou
+Testes em Engenharia de Software
 
-diagrama casos de uso
-de classes 
-de sequencia
- e DEPOIS
- teste unitario
+-------------------------------------
+Equipe de Testes
 
-durante a sprint nao se pode mexer em requisito
-é permitido po requisitos durante a produçaõ de uma aplicação
+- A pessoa que testa deve ser diferente da pessoa que implementou.
+- Separação garante imparcialidade e melhor identificação de erros.
 
-D efeito == quando voce cria uma situação de que daquilo poide gerar um erro
-E rro == quando essa situação acontece erro no sistema, alçgo da errado
-F alha == por cuasa do erro algo para de funcionar, trva apro usuario por exemplo
+-------------------------------------
+Ordem Recomendada
 
-uso de try 
--
--
--
-except ou catch
--
--
-finally
--
--
+1. Diagramas de Casos de Uso
+2. Diagramas de Classes
+3. Diagramas de Sequência
+4. Teste Unitário
 
-é possivel testar sem os diagramas e validar uma task sem os diagramas porem é possivel editar o teste posteriormente com os diagramas feitos e valida-lo de forma mais precisa 
+-------------------------------------
+Requisitos e Sprint
+
+- Durante a sprint, não é permitido modificar requisitos.
+- É permitido que o PO altere requisitos durante a produção de uma aplicação.
+
+-------------------------------------
+Definições Importantes
+
+- Defeito: situação que pode gerar um erro.
+- Erro: quando a situação do defeito acontece, algo no sistema está errado.
+- Falha: resultado do erro que faz algo parar de funcionar ou trava o usuário.
+
+-------------------------------------
+Estrutura de Tratamento de Erros
+
+Uso de try/except/finally (Python) ou try/catch/finally (Java, C#):
+
+try:
+  - Código que pode gerar um erro
+except (ou catch):
+  - Captura o erro e define ação corretiva
+finally:
+  - Código que sempre será executado, independente de erro ou não
+
+-------------------------------------
+Observações sobre Testes e Diagramas
+
+- É possível testar e validar uma task mesmo sem diagramas.
+- Após a criação dos diagramas, é possível editar os testes e validá-los de forma mais precisa.
+- Diagramas ajudam a ter clareza sobre funcionalidades e interações, aumentando a precisão dos testes.
