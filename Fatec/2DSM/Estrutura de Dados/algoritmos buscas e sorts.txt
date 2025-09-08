@@ -1,53 +1,143 @@
-busca em vetores ao buscar um elemento ele retorna o indice ou algum coisa que indique que isso nao esta la
+BUSCA E ORDENAÇÃO EM VETORES E LISTAS
 
-em caso de listas, e arrays nao ordenados é utilizado busca sequencial, pois listas nao ordem subsequente
+----------------------------------------------------
+1. Busca em Vetores
+Ao buscar um elemento em um vetor, o algoritmo retorna:
+- O índice do elemento encontrado, OU
+- Algum valor que indique que o elemento não foi encontrado (ex: -1).
 
-metodo equals para substituir o == 
+----------------------------------------------------
+2. Busca Sequencial (Linear Search)
+- Utilizada em listas ou arrays não ordenados.
+- Percorre o vetor elemento por elemento até encontrar o valor desejado.
+- Caso não encontre, retorna -1.
 
-busca sentinela
-    sequential_ws(e:T, v:T[]):number{
-        let pos:number = 0;
-        v.push(e);
-        while(v[pos]!= e)
-            ++pos;
-        if(pos == (v.length-1)){
-            v.pop();
-            return -1;
-        } else{
-            v.pop();
-            return pos;
-        }                     
+Observação:
+- Em JavaScript, a comparação deve ser feita com "===".
+- Em Java/POO, usamos o método equals() para comparar objetos, pois "==" compara referências e não valores.
+
+Complexidade:
+- Tempo: O(n)
+- Espaço: O(1)
+
+----------------------------------------------------
+3. Busca Sequencial com Sentinela
+Estratégia:
+- Coloca o elemento buscado no final do vetor (sentinela).
+- Percorre o vetor até encontrar o valor.
+- Se a posição encontrada for a última (sentinela), significa que o elemento não estava presente.
+
+Exemplo de implementação (TypeScript):
+
+sequential_ws(e:T, v:T[]):number {
+    let pos:number = 0;
+    v.push(e); // adiciona o sentinela
+    while(v[pos] != e)
+        ++pos;
+    if(pos == (v.length-1)) {
+        v.pop();
+        return -1; // não encontrado
+    } else {
+        v.pop();
+        return pos; // índice do elemento
     }
-       
+}
 
-adiciona um numero ao fim do array e compara se ele aparece, se o numero aparecer antes do adicionado ao fim ele é o verdadeiro, se nenhum numero fore achgad entao o array nmao tinh aesse numero
-[2][4][5][7][10](adicionado o 10)
-[2][5][10][7][10](acha e retorna o primeiro 10)
+Exemplo prático:
+Array original: [2, 4, 5, 7]
+Elemento buscado: 10
+Array com sentinela: [2, 4, 5, 7, 10]
+→ percorre, não encontra, chega na última posição = não está presente.
 
+Complexidade:
+- Tempo: O(n)
+- Espaço: O(1)
 
+----------------------------------------------------
+4. Busca Binária
+- Só pode ser utilizada em vetores ORDENADOS.
+- Divide o vetor repetidamente ao meio, comparando o valor do meio com o valor buscado.
 
-busca binaria é com vetores ordenados
+Etapas:
+1. Definir início, fim e meio.
+2. Comparar o valor do meio com o elemento desejado.
+3. Se for menor, procurar na metade esquerda.
+4. Se for maior, procurar na metade direita.
+5. Repetir até encontrar ou até esgotar o vetor.
 
+Observações:
+- Função piso (floor) → arredonda para baixo.
+- Função teto (ceil) → arredonda para cima.
+- Quando o meio não for inteiro, arredonda usando piso ou teto.
 
+Exemplo:
+Array = [1, 2, 3, 4, 5]
+Busca pelo 3:
+- início = 1, fim = 5, meio = 3 → encontrado.
 
-[2,5] = 2 função piso === arredonda para baixo
-e 
-[7,5] = 8 funçao teto === arredonda para cima
+Complexidade:
+- Tempo: O(log n)
+- Espaço: O(1)
 
+----------------------------------------------------
+5. Algoritmos de Ordenação
 
+a) Bubble Sort
+- Percorre o vetor comparando elementos adjacentes e trocando-os se estiverem fora de ordem.
+- Após cada passada, o maior elemento vai para o final.
+- É considerado ineficiente para grandes vetores.
 
-meio + 1
-meio - 1
-[1]          [2]           [3]             [4]        [5]
-inicio                   meio                      fim
+Exemplo:
+[3, 2, 4, 1]
+Passo 1: [2, 3, 1, 4]
+Passo 2: [2, 1, 3, 4]
+Passo 3: [1, 2, 3, 4]
 
+Complexidade:
+- Tempo: O(n²)
+- Espaço: O(1)
 
+----------------------------------------------------
+b) Quick Sort
+- Baseado no uso de um pivô.
+- Elementos menores que o pivô ficam à esquerda.
+- Elementos maiores que o pivô ficam à direita.
+- Repete o processo recursivamente em cada lado.
 
+Exemplo:
+[3, 2, 4, 1, 7]
+Pivô = 3
+Particiona: [2, 1] [3] [4, 7]
+Ordena cada lado: [1, 2] [3] [4, 7]
 
-algoritmos de ordenação
+Complexidade:
+- Tempo médio: O(n log n)
+- Pior caso: O(n²) (quando o pivô é sempre o menor ou o maior elemento)
+- Espaço: O(log n) (recursão)
 
+----------------------------------------------------
+c) Merge Sort
+- Algoritmo de ordenação por divisão e conquista.
+- Divide o vetor em duas metades até restar apenas 1 elemento em cada subvetor.
+- Depois, combina (merge) os subvetores em ordem crescente.
 
-bubble sort === UMA MERDA
-quick sort é com base no pivo, os valores maiores que o pivo ficam a sua direita e os menores a sua esquerda
-[3][2][4][1][7] === 3 é o pivo
-[2][1]  [3]   [4][7]
+Exemplo:
+[3, 2, 4, 1]
+Divide em [3, 2] e [4, 1]
+Divide novamente: [3], [2], [4], [1]
+Combina: [2, 3] e [1, 4]
+Combina final: [1, 2, 3, 4]
+
+Complexidade:
+- Tempo: O(n log n)
+- Espaço: O(n) (precisa de vetor auxiliar)
+
+----------------------------------------------------
+d) Resumo das Complexidades
+
+Busca Linear → O(n)
+Busca com Sentinela → O(n)
+Busca Binária → O(log n)
+Bubble Sort → O(n²)
+Quick Sort → O(n log n) (médio) | O(n²) (pior caso)
+Merge Sort → O(n log n)
