@@ -1,27 +1,102 @@
-instancia 
-soma ()
-return 3;
-apenas fiuncionara em 
-1 + 2 
-0 + 3
--1 + 4
+RECURSÃO E TABELAS DE HASH
 
-´epossivel ter mais d eum caso base
+----------------------------------------------------
+1. O que é Recursão
+- Uma função recursiva é uma função que chama a si mesma.
+- A ideia é dividir o problema em subproblemas menores, resolvendo cada parte até chegar a um caso base.
+- É útil quando o problema pode ser naturalmente representado em termos menores de si mesmo.
+- Muitas vezes, a recursão pode ser mais simples e elegante do que loops.
 
-funçaio recursivas schama ela mesma 
-e no eexpemlo cham aum array nmenor
+Exemplo básico:
+function soma(n: number): number {
+    if (n == 0) return 0; // caso base
+    return n + soma(n - 1); // chamada recursiva
+}
 
+Explicação:
+soma(3) → 3 + soma(2)
+soma(2) → 2 + soma(1)
+soma(1) → 1 + soma(0)
+soma(0) → 0 (caso base)
+Resultado = 6
 
-estado paricalmente completo ou suspenso0
+----------------------------------------------------
+2. Caso Base
+- Toda recursão precisa de pelo menos 1 caso base.
+- O caso base define quando a função deve parar de se chamar.
+- Uma função recursiva SEM caso base entra em loop infinito (stack overflow).
 
-re ursao precia atinfdir o caso base voce nao precisa estar longe dele no inicio
-recursao é usada para quebrar um problema em procblemas menores
-as vezes recursao pode ser mais simples do que loops
+Observações:
+- É possível ter mais de um caso base.
+- Não é necessário estar "longe" do caso base no início; o algoritmo chega nele com as chamadas sucessivas.
 
-tabela de hash == uma coisa que mapeia para um inteiro === json
-cache a um grosso modo e momtar um json e compilar os valoes er os valores que eles deveriam retornar
+Exemplo com múltiplos casos base:
+function f(n: number): number {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    return f(n - 1) + f(n - 2);
+}
+// Sequência de Fibonacci
 
-SHA
+----------------------------------------------------
+3. Estado Parcialmente Completo ou Suspenso
+- A cada chamada recursiva, o estado da função fica armazenado na pilha de chamadas.
+- Isso permite que, quando a função interna retorna, a externa continue sua execução.
 
-o hash é um nunmero inteiro que vai armazenar um valor 
+Exemplo:
+fatorial(3)
+= 3 * fatorial(2)
+= 3 * (2 * fatorial(1))
+= 3 * (2 * (1 * fatorial(0)))
+= 3 * 2 * 1 * 1
+= 6
 
+----------------------------------------------------
+4. Recursão vs Loops
+- Recursão quebra o problema em partes menores até chegar ao caso base.
+- Loops repetem um bloco de instruções até que uma condição seja satisfeita.
+- Muitos problemas podem ser resolvidos de ambas as formas.
+- Recursão costuma ser mais simples em problemas de árvore, grafos e divisão e conquista.
+
+----------------------------------------------------
+5. Tabela de Hash
+- Uma tabela de hash é uma estrutura de dados que associa uma chave a um valor.
+- Usa uma função de hash para mapear a chave em um número inteiro (índice).
+- O objetivo é permitir inserções, buscas e remoções rápidas.
+
+Exemplo conceitual:
+{
+  "nome": "Alice",
+  "idade": 25,
+  "cidade": "São Paulo"
+}
+
+Chaves ("nome", "idade", "cidade") → transformadas em índices por uma função de hash.
+
+Observação:
+- Pode ser comparado a um "JSON" que associa chave → valor.
+- Em estruturas de dados, é usado para implementar dicionários e caches.
+
+----------------------------------------------------
+6. Cache e Hash
+- Cache pode ser entendido (grosseiramente) como um mapeamento de valores que já foram calculados para evitar recalcular.
+- Exemplo: memorizar os resultados de uma função recursiva para acelerar a execução (técnica chamada memoization).
+
+----------------------------------------------------
+7. Funções de Hash (SHA, etc.)
+- Um hash é um número inteiro gerado a partir de uma chave.
+- Ele serve como índice para armazenar ou acessar um valor.
+- Funções como SHA produzem códigos únicos (quase sempre) para identificar valores.
+
+----------------------------------------------------
+8. Resumo
+Recursão:
+- Define caso base(s).
+- Divide problema em subproblemas menores.
+- Usa pilha de chamadas para armazenar estados.
+- Pode substituir loops em muitas situações.
+
+Tabelas de Hash:
+- Estrutura chave → valor.
+- Baseada em funções de hash que mapeiam chaves em inteiros.
+- Utilizada em caches, dicionários, indexação e armazenamento rápido.
