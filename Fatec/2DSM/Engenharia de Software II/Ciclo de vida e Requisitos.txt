@@ -1,69 +1,74 @@
-cad aplicação tem suas respectivas preocupações
-web - outros B.O
-mobile - sistema operacional
-desktop - uso de ram e e memoria
+Ciclo de Vida do Software
 
-projeto começa pelo banco de dados, com ele se define interface e outros elementos
+Cada tipo de aplicação tem preocupações específicas:
+- Web: problemas relacionados a rede, hospedagem, escalabilidade.
+- Mobile: dependência do sistema operacional, compatibilidade com dispositivos.
+- Desktop: uso de memória RAM, espaço em disco e desempenho local.
 
-PO é crucial no desenvolvimento de software, a elicitação mal feita pode estragar o projeto
+O projeto geralmente começa pelo banco de dados, pois a modelagem de dados influencia a interface, as regras de negócio e outros elementos.
 
+O Product Owner (PO) é crucial no desenvolvimento:
+- Uma elicitação de requisitos mal feita pode comprometer todo o projeto.
 
-levantamento e analise de requisitos:
-levantar os requisitos quebrar em tasks e definir oque cada um vai fazer
-resumo: OQUE FAZER?
-regras de negocios definem e mudam de acordo com o objketivo e cliente do seu software
-padaria != sistema educacional (necessitam daedos diferentres)
-requisito funcional(feature) = vira funcionalidade, função do sistema
-requisito nao funcional = oque é necesario pro funcional funcionar
-NAO EXISTE REQUISITO SEMI-ATENDIDO
+-------------------------------------
+Levantamento e Análise de Requisitos
 
-modelar:
-quebrar  os requisitos de forma visual e organizada para emlhor entendimento
+Objetivo: definir O QUE FAZER.
+- Levantar requisitos.
+- Quebrar em tarefas (tasks).
+- Definir responsáveis.
 
-implementação:
-codar.
+Tipos de Requisitos:
+- Funcionais: funcionalidades do sistema (features).
+  Exemplo: “Cadastrar Cliente” vira uma funcionalidade implementada.
+- Não funcionais: condições para que os requisitos funcionais sejam atendidos.
+  Exemplo: desempenho, segurança, usabilidade.
+- Importante: não existe requisito “semi-atendido”. Ou é atendido ou não é.
 
-testes e validações:
-testar testar se oque foi implementado esta de acordo e eatendentpo do requisito
+Regras de Negócio:
+- Variam de acordo com o objetivo e cliente.
+- Exemplo: Sistema de padaria ≠ Sistema educacional (dados e processos diferentes).
 
-implatancçao
-implantar é pegar os oftware em ambiente de produção, rodar, funcionar
+-------------------------------------
+Modelagem
 
+Objetivo: organizar requisitos de forma visual para melhor entendimento.
+- Casos de uso: mostram o que o sistema pode fazer e quem interage com ele.
+- Classes: descrevem atributos e métodos dos objetos do sistema.
+- Diagramas de sequência: descrevem passo a passo como ocorre a interação entre objetos.
+  Exemplo: acessar tela de cadastro → fornecer dados → clicar em botão.
 
-manutenção
-manter o sistemwa funciuonado, se ficar obsoletto ele pé deatiuvadfo e substituido
+-------------------------------------
+Implementação
 
-qual a diferença entre validação e verificação?
-R: Semelhantes, 
-verificar: fazer check-list se tudo que foi feito esta de acordo com o planejado, qualquer um pode fazer
-validar: validar é o aceite, somente PO, pode validar, o
-PO deve validar todas as tarefas, e explicar porque estao validadas, uma tarefa so esta pronta se estiver validada.
+- Transformar a modelagem em código.
+- Boa prática: associar tarefas a User Stories, facilitando organização e controle.
 
+-------------------------------------
+Testes e Validações
 
+- Objetivo: verificar se o que foi implementado atende aos requisitos.
+- Tipos de teste: unitários, integração, aceitação.
+- É necessário documentar os testes realizados.
 
+Diferença entre Verificação e Validação:
+- Verificação: checagem se tudo que foi feito está de acordo com o planejado. Pode ser feita por qualquer pessoa da equipe (check-list).
+- Validação: aceite do requisito pelo PO (Product Owner). Só ele pode validar, explicando porque está correto. Uma tarefa só está pronta quando está validada.
 
+-------------------------------------
+Implantação
 
-casos de uso
-oque o sistema pode fazer e oque vai fazer cada coisa
+- Colocar o software em ambiente de produção (rodar de forma real).
 
+-------------------------------------
+Manutenção
 
-classes
+- Manter o sistema funcionando e atualizado.
+- Quando fica obsoleto, pode ser desativado e substituído.
 
+-------------------------------------
+Boas Práticas e Referências
 
-
-sequenbcia
-passo a passo doque voce pode realixzaqr no sistema
-acessar a tela de cadastro-fornecer os dados-clicar num botao
-
-
-professor andere cobrara teste unitario, testar funcionalidade éw necessaiuo docujentar os testes
-
-
-
-
-
-boa ideia:
-por qual user story é referente a tarefa, mis organizado e controle de quando as user stories estao completas
-ler livro UML 2 - uma abordagem pratica
-ler livro codigo limpo
-astalavista.sk (site piratao)
+- Associar tarefas a User Stories.
+- Ler “UML 2 – Uma Abordagem Prática”.
+- Ler “Código Limpo” (Clean Code).
