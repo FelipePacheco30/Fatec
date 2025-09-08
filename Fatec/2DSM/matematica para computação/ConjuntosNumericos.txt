@@ -77,3 +77,4 @@ Z = Inteiros → {..., -2, -1, 0, 1, 2, ...}.
 Q = Racionais → frações p/q (dízimas e decimais exatos).
 R = Reais → racionais + irracionais.
 R - Q = Irracionais → √2, π, e, etc.
+
