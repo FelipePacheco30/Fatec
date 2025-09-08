@@ -1,54 +1,39 @@
-Um caso de uso repredenta uma ação a ser realizada no sistema de software e não realizadas pelo usuario
-Caso de uso é a representação de uma funcionalidade do sistema
-caso de uso === requisito funvional ao implementar vira funcionalidade
-ator não é neecssariamente um usuario do sistema === perfil de usuario
+Casos de Uso
 
-*Filho herda tambem os caso do pai
+- Um caso de uso representa uma ação ou funcionalidade realizada pelo sistema.
+- Ele descreve um requisito funcional que, ao ser implementado, se torna uma funcionalidade disponível.
+- O ator não é necessariamente um usuário humano. Pode ser outro sistema, dispositivo ou perfil de usuário que interage com o sistema.
 
-obj pai     
-   ^
-   |
-obj filho
-   ^
-   |
-obj neto
-   
+Hierarquia e Generalização:
+- Caso de uso pode herdar funcionalidades de outro.
+- Exemplo: 
+    Objeto Pai
+       ^
+       |
+    Objeto Filho
+       ^
+       |
+    Objeto Neto
+- O filho herda também os casos do pai.
+- Generalização: relação do específico para o geral.
+- Especificação: relação do geral para o específico.
 
-generalização   ^      especiicação |  
-                |                   ^
+Include vs Extend:
+- Include:
+  - Representa obrigatoriedade.
+  - O caso de uso principal chama outro caso de uso sempre que é executado.
+  - Exemplo: "Efetuar Compra" inclui "Calcular Frete".
+  - Uso: quando uma funcionalidade é sempre necessária em outra.
 
+- Extend:
+  - Representa opcionalidade.
+  - O caso de uso principal pode ser estendido por outro caso de uso em situações específicas.
+  - Exemplo: "Efetuar Compra" pode ser estendido por "Aplicar Cupom de Desconto".
+  - Uso: quando uma funcionalidade é condicional ou depende de contexto.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-talvez caia na prova: diferença de include e extends
+Resumo:
+- Caso de uso = requisito funcional descrito.
+- Ator = quem/que interage com o sistema.
+- Generalização = relação de herança entre casos de uso.
+- Include = obrigatoriedade.
+- Extend = opcionalidade.
