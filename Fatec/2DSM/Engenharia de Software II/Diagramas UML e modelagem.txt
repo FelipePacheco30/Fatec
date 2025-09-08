@@ -1,0 +1,49 @@
+Diagramas UML e Modelagem
+
+Modelagem pode ser feita em dois principais aspectos:
+- Software: utilizando diagramas UML.
+- Banco de dados: utilizando o MER (Modelo Entidade-Relacionamento).
+
+Elicitação e Levantamento:
+- Define O QUE FAZER.
+- Envolve descobrir e documentar os requisitos do sistema.
+
+Estruturação do Sistema:
+- Define COMO FAZER.
+- Etapa onde se pensa na arquitetura, modelagem e detalhamento.
+
+-------------------------------------
+UML (Unified Modeling Language)
+
+Principais Diagramas:
+
+1. Diagrama de Casos de Uso
+- Representa funcionalidades vistas pelo usuário (visão externa).
+- É feito “de fora para dentro”.
+- Mostra atores e casos de uso.
+- Responde: o que o sistema deve fazer?
+
+2. Diagrama de Classes
+- Representa a estrutura interna do sistema (visão estática).
+- É feito “de dentro para fora”.
+- Mostra classes, atributos, métodos e relacionamentos.
+- Responde: como o sistema está organizado internamente?
+
+3. Diagrama de Sequência
+- Representa a interação dinâmica entre objetos.
+- Mostra mensagens trocadas ao longo do tempo.
+- Responde: como as funcionalidades são executadas passo a passo?
+
+-------------------------------------
+Ferramentas CASE
+
+CASE = Computer Aided Software Engineering
+- Ferramentas que auxiliam na modelagem e no desenvolvimento.
+- Exemplo: Astah (para UML).
+
+-------------------------------------
+Importância da Modelagem
+
+- Levantamento e análise de requisitos: definir o que será feito.
+- Modelagem: representar graficamente como será feito.
+- Modelagem é essencial: todo desenvolvedor precisa saber modelar e interpretar modelagens para entender, comunicar e implementar sistemas corretamente.
