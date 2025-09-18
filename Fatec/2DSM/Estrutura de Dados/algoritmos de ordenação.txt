@@ -1,0 +1,3 @@
+merge sort === divisão e conquista
+
+vai quebrando ate pares e ordenando na ordem correta
