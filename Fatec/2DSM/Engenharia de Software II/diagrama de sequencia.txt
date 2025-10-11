@@ -1,0 +1,143 @@
+------------------------------------------------------------
+🎯 MODELO COMPLETO — DIAGRAMA DE CASOS DE USO E SEQUÊNCIA
+------------------------------------------------------------
+
+1. IDENTIFICAÇÃO DO SISTEMA
+------------------------------------------------------------
+Sistema: Portal de Acesso de Usuários
+Descrição: O sistema permite que usuários se autentiquem, recuperem acesso e realizem operações de acordo com seu perfil (administrador, colaborador, visitante).
+
+Atores principais:
+- Usuário
+- Sistema de Banco de Dados (BD)
+- Servidor de Autenticação
+
+
+2. DIAGRAMA DE CASOS DE USO GERAL
+------------------------------------------------------------
+Descrição: Este diagrama mostra as principais interações entre o ator (Usuário) e o sistema.
+
+Casos de uso principais:
+1. Autenticar Usuário
+2. Recuperar Senha
+3. Cadastrar Usuário
+4. Bloquear Conta
+5. Visualizar Dashboard
+
+Descrição textual do diagrama:
+Usuário → (Autenticar Usuário)
+Usuário → (Recuperar Senha)
+Usuário → (Cadastrar Usuário)
+Sistema → (Bloquear Conta)
+Usuário → (Visualizar Dashboard)
+
+
+3. CASO DE USO: AUTENTICAÇÃO DO USUÁRIO
+------------------------------------------------------------
+Objetivo:
+Permitir que o usuário acesse o sistema informando login e senha válidos.
+
+Atores envolvidos:
+- Usuário
+- Sistema de Autenticação
+- Banco de Dados
+
+Pré-condições:
+- Usuário deve possuir cadastro prévio.
+- Conexão com o banco de dados deve estar ativa.
+
+Pós-condições:
+- Sessão iniciada (caso sucesso).
+- Mensagem de erro (caso falha).
+
+
+4. DIAGRAMAS DE SEQUÊNCIA (SUBCASOS)
+------------------------------------------------------------
+
+4.1 Situação OK (Login com sucesso)
+Fluxo:
+1. Usuário informa login e senha.
+2. Sistema valida dados no BD.
+3. BD confirma credenciais.
+4. Sistema concede acesso e redireciona ao painel.
+
+Diagrama de sequência:
+Usuário → Sistema: Inserir login e senha
+Sistema → BD: Consultar credenciais
+BD → Sistema: Retornar OK
+Sistema → Usuário: Exibir painel principal
+
+
+4.2 Senha incorreta
+Usuário → Sistema: Inserir login e senha
+Sistema → BD: Validar credenciais
+BD → Sistema: Retornar "senha incorreta"
+Sistema → Usuário: Exibir mensagem de erro
+
+
+4.3 Usuário não cadastrado
+Usuário → Sistema: Inserir login e senha
+Sistema → BD: Consultar usuário
+BD → Sistema: Retornar "usuário inexistente"
+Sistema → Usuário: Exibir mensagem "Usuário não cadastrado"
+
+
+4.4 Falta de conexão com o BD
+Usuário → Sistema: Inserir login e senha
+Sistema → BD: Tentar validar
+BD ✖: Sem resposta
+Sistema → Usuário: Exibir "Erro de conexão com o servidor"
+
+
+4.5 Usuário bloqueado
+Usuário → Sistema: Inserir login e senha
+Sistema → BD: Consultar status do usuário
+BD → Sistema: Retornar "bloqueado"
+Sistema → Usuário: Exibir "Conta bloqueada. Contate o suporte."
+
+
+4.6 Esqueceu a senha/login
+Usuário → Sistema: Clicar em "Esqueci a senha"
+Sistema → BD: Verificar e-mail cadastrado
+BD → Sistema: OK
+Sistema → Usuário: Enviar link de redefinição de senha
+
+
+4.7 Excesso de tentativas
+Usuário → Sistema: Inserir login e senha (várias vezes)
+Sistema → BD: Registrar tentativas
+BD → Sistema: Contador > 5
+Sistema → Usuário: Exibir "Conta temporariamente bloqueada"
+
+
+4.8 Não digitar usuário/senha
+Usuário → Sistema: Enviar formulário vazio
+Sistema → Usuário: Exibir "Preencha todos os campos obrigatórios"
+
+
+5. DOCUMENTAÇÃO DE TESTES
+------------------------------------------------------------
+Cada diagrama de sequência gera casos de teste funcionais.
+
+ID | Caso de Uso      | Cenário                | Entrada                     | Resultado Esperado
+---|------------------|------------------------|------------------------------|---------------------
+CT01 | Autenticação    | Login OK               | Usuário válido, senha válida | Acesso concedido
+CT02 | Autenticação    | Senha incorreta        | Usuário válido, senha inválida| Mensagem de erro
+CT03 | Autenticação    | Usuário inexistente    | Usuário inválido             | Mensagem “Usuário não cadastrado”
+CT04 | Autenticação    | Falha de BD            | Falha de conexão             | Mensagem “Erro de servidor”
+CT05 | Autenticação    | Usuário bloqueado      | Conta bloqueada              | Mensagem “Conta bloqueada”
+CT06 | Autenticação    | Esqueceu senha         | E-mail cadastrado            | Envio de link
+CT07 | Autenticação    | Excesso de tentativas  | 6 tentativas                 | Bloqueio temporário
+CT08 | Autenticação    | Campos vazios          | Formulário vazio             | Alerta de campos obrigatórios
+
+
+6. OBSERVAÇÕES
+------------------------------------------------------------
+- Cada caso de uso deve conter pelo menos um diagrama de sequência.
+- Cada fluxo alternativo ou excepcional deve gerar um diagrama específico.
+- A documentação de testes depende diretamente dos diagramas de sequência.
+- Esse modelo pode ser reutilizado para qualquer outro caso de uso do sistema.
+
+------------------------------------------------------------
+FIM DO DOCUMENTO
+------------------------------------------------------------
