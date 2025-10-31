@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planejamento Financeiro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>💰 Planejamento Financeiro</h1>
+
+    <label for="cenario">Escolha o cenário:</label>
+    <select id="cenario">
+      <option value="a">A - Depósito inicial</option>
+      <option value="b">B - Depósito inicial + aportes</option>
+    </select>
+
+    <label for="C0">Capital inicial (C₀):</label>
+    <input type="number" id="C0" placeholder="Ex: 1000" />
+
+    <label for="Cf">Capital objetivo (C_f):</label>
+    <input type="number" id="Cf" placeholder="Ex: 2000" />
+
+    <label for="tipoTaxa">Tipo de taxa:</label>
+    <div class="taxa-opcoes">
+      <button class="taxa-btn" data-tipo="1">📆 Anual (%)</button>
+      <button class="taxa-btn" data-tipo="2">🗓️ Mensal (%)</button>
+    </div>
+
+    <input type="number" id="taxa" placeholder="Ex: 12" />
+
+    <div id="aportes-section" class="hidden">
+      <label for="c0">Aporte mensal (c₀):</label>
+      <input type="number" id="c0" placeholder="Ex: 200" />
+    </div>
+
+    <button id="calcular">Calcular</button>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

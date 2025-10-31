@@ -1,17 +1,14 @@
 {
-  "name": "final_evaluation_resolution_4.1",
+  "name": "planejamento-financeiro",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Sistema de planejamento financeiro interativo (frontend + Node.js)",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^24.6.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+  "author": "Felipe e Carlos",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }

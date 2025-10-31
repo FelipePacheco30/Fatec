@@ -1,0 +1,104 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: rgba(20, 20, 30, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  width: 350px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #ffd369;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  text-align: left;
+  color: #ddd;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 5px;
+  background-color: #2b2b3d;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+
+input:focus, select:focus {
+  background-color: #3b3b50;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #ffd369;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #ffb703;
+  transform: scale(1.05);
+}
+
+.hidden {
+  display: none;
+}
+
+.taxa-opcoes {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.taxa-btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  background: #333;
+  color: #fff;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.taxa-btn:hover {
+  background: #444;
+}
+
+.taxa-btn.selecionado {
+  background: #ffd369;
+  color: #222;
+  border-color: #ffb703;
+}
+
+#resultado {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  min-height: 40px;
+}

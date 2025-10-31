@@ -25,7 +25,7 @@ function monthsToYearsMonthsText(monthsDecimal: number | null, monthsInt: number
   const fracText = monthsDecimal !== null ? ` (≈ ${monthsDecimal.toFixed(2)} meses)` : '';
   return `${human}${fracText}`;
 }
-
+//cal
 function scenarioA_calc(C0: number, Cf: number, iMonthly: number) {
   if (C0 <= 0) throw new Error('C0 deve ser > 0');
   if (Cf <= C0) throw new Error('Cf deve ser maior que C0');
