@@ -210,7 +210,7 @@ function bindUI() {
         const rows2 = [
           ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
           ["Capital alvo (C_f)", `R$ ${Cf.toFixed(2)}`],
-          ["Taxa mensal", `${(iMonthly * 100).toFixed(6)}% / m\xEAs`],
+          ["Taxa mensal", `${iMonthly * 100}% / m\xEAs`],
           ["Meses (exatos)", `${monthsExact.toFixed(4)} meses`],
           ["Meses inteiros necess\xE1rios", `${monthsCeil} meses \u2014 ${human2}`],
           ["Valor final (ap\xF3s arredondamento)", formatCurrency(finalValueAtMonthsCeil)],
@@ -232,7 +232,7 @@ function bindUI() {
       const rows = [
         ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
         ["Aporte mensal (c\u2080)", `R$ ${c0.toFixed(2)}`],
-        ["Taxa mensal", `${(iMonthly * 100).toFixed(6)}% / m\xEAs`],
+        ["Taxa mensal", `${iMonthly * 100}% / m\xEAs`],
         ["Meses necess\xE1rios", `${res.months} meses \u2014 ${human}`],
         ["Valor final alcan\xE7ado", formatCurrency(res.finalValue)],
         ["Total aportado (soma)", formatCurrency(res.totalContributions)],

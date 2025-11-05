@@ -1,7 +1,3 @@
-// src/finance.ts
-// Lógica pura — sem I/O. Agora scenarioB_calc aceita parâmetro `timing`: 'start' | 'end'.
-// Retorna months, finalValue, history (opcional), totalContributions, totalYield.
-
 export function toNumber(input: string): number {
   const n = Number(String(input).replace(',', '.').trim());
   return Number.isFinite(n) ? n : NaN;
