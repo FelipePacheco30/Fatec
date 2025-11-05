@@ -1,100 +1,108 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Planejamento Financeiro — Simulador</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="page">
-    <!-- Left: formulário compacto -->
-    <section class="panel panel-left">
-      <h1>Planejamento Financeiro</h1>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Planejamento Financeiro — Simulador</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <!-- Left: formulário compacto -->
+      <section class="panel panel-left">
+        <h1>Planejamento Financeiro</h1>
 
-      <div class="field">
-        <label for="scenario">Cenário</label>
-        <select id="scenario">
-          <option value="a">A — Depósito inicial</option>
-          <option value="b">B — Depósito + aportes</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="C0">Capital inicial (C₀)</label>
-        <input id="C0" type="text" value="1000" />
-      </div>
-
-      <div class="field">
-        <label for="Cf">Capital alvo (C_f)</label>
-        <input id="Cf" type="text" value="2000" />
-      </div>
-
-      <div class="field">
-        <label for="taxType">Tipo de taxa</label>
-        <select id="taxType" class="tax-select">
-          <option value="annual">Anual (%)</option>
-          <option value="monthly">Mensal (%)</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="rate">Taxa (%)</label>
-        <input id="rate" type="text" value="12" />
-      </div>
-
-      <div class="field hidden" id="aporteBlock">
-        <label for="c0">Aporte mensal (c₀)</label>
-        <input id="c0" type="text" value="50" />
-      </div>
-
-      <div class="row">
-        <button id="run" class="btn">Calcular</button>
-        <button id="reset" class="btn ghost">Limpar</button>
-      </div>
-
-      <div class="small muted" style="margin-top:8px">Aportes adicionados a partir do 2º mês. Taxa aceita com vírgula ou ponto.</div>
-    </section>
-
-    <!-- Right: card grande para resultado (tabela) -->
-    <aside class="panel panel-right">
-      <div id="resultado-card" class="result-card">
-        <div class="result-header">
-          <div class="result-title">💰 Resultado</div>
-          <div id="summarySmall" class="result-subtitle muted">Resultados e histórico aparecem abaixo</div>
+        <div class="field">
+          <label for="cenario">Cenário</label>
+          <select id="cenario">
+            <option value="a">A — Depósito inicial</option>
+            <option value="b">B — Depósito + aportes</option>
+          </select>
         </div>
 
-        <!-- Tabela de resultado principal -->
-        <div class="result-table-wrap">
-          <table id="resultTable" class="result-table">
-            <thead>
-              <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody id="resultBody">
-              <!-- preenchido via JS -->
-            </tbody>
-          </table>
+        <div class="field">
+          <label for="capitalInicial">Capital inicial (C₀)</label>
+          <input id="capitalInicial" type="text" value="1000" />
         </div>
 
-        <!-- Histórico com visual mais espaçado -->
-        <div id="historico" class="historico hidden">
-          <div class="hist-title">📜 Histórico de cada mês</div>
-          <div class="hist-list" id="histList">
-            <!-- itens preenchidos via JS -->
+        <div class="field">
+          <label for="capitalFinal">Capital alvo (C_f)</label>
+          <input id="capitalFinal" type="text" value="2000" />
+        </div>
+
+        <div class="field">
+          <label for="tipoTaxa">Tipo de taxa</label>
+          <select id="tipoTaxa" class="tax-select">
+            <option value="annual">Anual (%)</option>
+            <option value="monthly">Mensal (%)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="taxa">Taxa (%)</label>
+          <input id="taxa" type="text" value="12" />
+        </div>
+
+        <!-- Aporte aparece apenas no cenário B -->
+        <div id="aporteContainer" style="display: none">
+          <label for="momentoAporte">Momento do aporte:</label>
+          <select id="momentoAporte">
+            <option value="end">No fim do mês</option>
+            <option value="start">No início do mês</option>
+          </select>
+
+          <label for="aporteMensal">Aporte mensal (c₀):</label>
+          <input id="aporteMensal" type="number" value="50" />
+        </div>
+
+        <div class="row" style="margin-top: 12px">
+          <button id="calcularBtn" class="btn">Calcular</button>
+          <button id="reset" class="btn ghost">Limpar</button>
+        </div>
+
+        <div class="small muted" style="margin-top: 8px">
+          Aportes adicionados a partir do 2º mês. Taxa aceita com vírgula ou
+          ponto.
+        </div>
+      </section>
+
+      <!-- Right: card grande para resultado (tabela) -->
+      <aside class="panel panel-right">
+        <div id="resultado" class="result-card">
+          <div class="result-header">
+            <div class="result-title">💰 Resultado</div>
+            <div id="summarySmall" class="result-subtitle muted">
+              Resultados e histórico aparecem abaixo
+            </div>
+          </div>
+
+          <!-- Tabela de resultado principal -->
+          <div class="result-table-wrap">
+            <table id="resultTable" class="result-table">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody id="resultBody">
+                <!-- preenchido via JS/TS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Histórico com visual mais espaçado (aparece automaticamente se existir) -->
+          <div id="historico" class="historico hidden">
+            <div class="hist-title">📜 Histórico de cada mês</div>
+            <div class="hist-list" id="histList">
+              <!-- itens preenchidos via JS/TS -->
+            </div>
           </div>
         </div>
+      </aside>
+    </main>
 
-        <div class="controls">
-          <label class="checkbox"><input id="showHistory" type="checkbox" /> Mostrar histórico detalhado</label>
-          <button id="exportCsv" class="btn small ghost">Exportar CSV</button>
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  <script src="script.js"></script>
-</body>
+    <!-- script compilado (bundle) -->
+    <script type="module" src="/bundle.js"></script>
+  </body>
 </html>

@@ -1,8 +1,4 @@
 // src/finance.ts
-function toNumber(input) {
-  const n = Number(input.replace(",", ".").trim());
-  return Number.isFinite(n) ? n : NaN;
-}
 function annualToMonthly(iAnnualDecimal) {
   return iAnnualDecimal / 12;
 }
@@ -31,7 +27,7 @@ function scenarioA_calc(C0, Cf, iMonthly) {
   const monthsCeil = Math.ceil(monthsExact);
   return { monthsExact, monthsCeil };
 }
-function scenarioB_calc(C0, c0, Cf, iMonthly, maxMonths = 1e4, captureHistory = false) {
+function scenarioB_calc(C0, c0, Cf, iMonthly, timing = "end", maxMonths = 1e4, captureHistory = false) {
   if (C0 <= 0)
     throw new Error("C0 deve ser > 0");
   if (c0 < 0)
@@ -43,30 +39,53 @@ function scenarioB_calc(C0, c0, Cf, iMonthly, maxMonths = 1e4, captureHistory = 
   let value = C0;
   let month = 0;
   const history = captureHistory ? [] : void 0;
-  if (value >= Cf)
-    return { months: 0, finalValue: value, history };
+  let totalContributions = 0;
+  if (value >= Cf) {
+    const totalYield = value - C0 - totalContributions;
+    return { months: 0, finalValue: value, history, totalContributions, totalYield };
+  }
   while (month < maxMonths) {
     month += 1;
-    const before = value;
-    const afterInterest = value * (1 + iMonthly);
-    let contributed = 0;
-    if (month >= 2 && c0 > 0) {
-      value = afterInterest + c0;
-      contributed = c0;
+    if (timing === "start") {
+      if (month >= 2 && c0 > 0) {
+        value += c0;
+        totalContributions += c0;
+      }
+      const before = value;
+      value = value * (1 + iMonthly);
+      if (captureHistory) {
+        history.push({
+          month,
+          contributionAppliedAt: "start",
+          valueBeforeInterest: Number(before.toFixed(12)),
+          valueAfterInterest: Number(value.toFixed(12)),
+          contribution: month >= 2 ? c0 : 0,
+          valueAfterContribution: Number(value.toFixed(12))
+          // same because contribution was before interest
+        });
+      }
     } else {
-      value = afterInterest;
+      const before = value;
+      value = value * (1 + iMonthly);
+      if (month >= 2 && c0 > 0) {
+        value += c0;
+        totalContributions += c0;
+      }
+      if (captureHistory) {
+        history.push({
+          month,
+          contributionAppliedAt: "end",
+          valueBeforeInterest: Number(before.toFixed(12)),
+          valueAfterInterest: Number((before * (1 + iMonthly)).toFixed(12)),
+          contribution: month >= 2 ? c0 : 0,
+          valueAfterContribution: Number(value.toFixed(12))
+        });
+      }
     }
-    if (captureHistory) {
-      history.push({
-        month,
-        valueBeforeInterest: Number(before.toFixed(12)),
-        valueAfterInterest: Number(afterInterest.toFixed(12)),
-        contribution: contributed,
-        valueAfterContribution: Number(value.toFixed(12))
-      });
+    if (value >= Cf) {
+      const totalYield = value - C0 - totalContributions;
+      return { months: month, finalValue: value, history, totalContributions, totalYield };
     }
-    if (value >= Cf)
-      return { months: month, finalValue: value, history };
     if (Math.abs(iMonthly) < 1e-12 && c0 === 0)
       break;
   }
@@ -75,73 +94,171 @@ function scenarioB_calc(C0, c0, Cf, iMonthly, maxMonths = 1e4, captureHistory = 
 
 // src/ui.ts
 function bindUI() {
-  const scenarioEl = document.getElementById("scenario");
-  const taxTypeEl = document.getElementById("taxType");
-  const rateEl = document.getElementById("rate");
-  const c0El = document.getElementById("c0");
-  const C0El = document.getElementById("C0");
-  const CfEl = document.getElementById("Cf");
-  const runBtn = document.getElementById("run");
-  const output = document.getElementById("output");
-  const historyToggle = document.getElementById("showHistory");
-  const historyBody = document.getElementById("historyBody");
-  const moreBlock = document.getElementById("more");
-  const aporteBlock = document.getElementById("aporteBlock");
-  if (!scenarioEl || !rateEl || !C0El || !CfEl || !runBtn || !output) {
-    console.warn("bindUI: elementos DOM n\xE3o encontrados (ids inv\xE1lidos).");
+  const scenarioEl = document.getElementById("cenario");
+  const capitalInicialEl = document.getElementById("capitalInicial");
+  const capitalFinalEl = document.getElementById("capitalFinal");
+  const tipoTaxaEl = document.getElementById("tipoTaxa");
+  const taxaEl = document.getElementById("taxa");
+  const aporteContainer = document.getElementById("aporteContainer");
+  const momentoAporteEl = document.getElementById("momentoAporte");
+  const aporteMensalEl = document.getElementById("aporteMensal");
+  const calcularBtn = document.getElementById("calcularBtn");
+  const resetBtn = document.getElementById("reset");
+  const resultadoEl = document.getElementById("resultado");
+  const resultBody = document.getElementById("resultBody");
+  const historicoBox = document.getElementById("historico");
+  const histList = document.getElementById("histList");
+  const summarySmall = document.getElementById("summarySmall");
+  const missing = [];
+  if (!scenarioEl)
+    missing.push("cenario");
+  if (!capitalInicialEl)
+    missing.push("capitalInicial");
+  if (!capitalFinalEl)
+    missing.push("capitalFinal");
+  if (!tipoTaxaEl)
+    missing.push("tipoTaxa");
+  if (!taxaEl)
+    missing.push("taxa");
+  if (!calcularBtn)
+    missing.push("calcularBtn");
+  if (!resultadoEl)
+    missing.push("resultado");
+  if (!resultBody)
+    missing.push("resultBody");
+  if (missing.length > 0) {
+    console.error("bindUI: elementos essenciais faltando no HTML. IDs esperados:", missing);
     return;
   }
-  scenarioEl.addEventListener("change", () => {
-    if (scenarioEl.value === "b") {
-      aporteBlock == null ? void 0 : aporteBlock.classList.remove("hidden");
-      moreBlock == null ? void 0 : moreBlock.classList.remove("hidden");
-    } else {
-      aporteBlock == null ? void 0 : aporteBlock.classList.add("hidden");
-      moreBlock == null ? void 0 : moreBlock.classList.add("hidden");
-    }
-  });
-  runBtn.addEventListener("click", () => {
-    var _a, _b;
-    output.innerHTML = "";
-    if (historyBody)
-      historyBody.innerHTML = "";
-    const C0 = toNumber(C0El.value);
-    const Cf = toNumber(CfEl.value);
-    const taxa = toNumber(rateEl.value);
-    const tipoTaxa = (_a = taxTypeEl == null ? void 0 : taxTypeEl.value) != null ? _a : "annual";
+  function toNumber(input) {
+    if (input === void 0 || input === null)
+      return NaN;
+    const n = Number(String(input).replace(",", ".").trim());
+    return Number.isFinite(n) ? n : NaN;
+  }
+  function formatCurrency(v) {
     try {
-      if (!Number.isFinite(C0) || C0 <= 0)
-        throw new Error("C0 inv\xE1lido.");
-      if (!Number.isFinite(Cf) || Cf <= 0)
-        throw new Error("Cf inv\xE1lido.");
-      if (!Number.isFinite(taxa))
-        throw new Error("Taxa inv\xE1lida.");
-      const iMonthly = tipoTaxa === "annual" ? annualToMonthly(taxa / 100) : taxa / 100;
+      return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    } catch (e) {
+      return "R$ " + v.toFixed(2);
+    }
+  }
+  function updateAporteVisibility() {
+    if (!aporteContainer || !scenarioEl)
+      return;
+    if (scenarioEl.value === "b")
+      aporteContainer.style.display = "block";
+    else
+      aporteContainer.style.display = "none";
+  }
+  updateAporteVisibility();
+  scenarioEl.addEventListener("change", updateAporteVisibility);
+  resetBtn && resetBtn.addEventListener("click", () => {
+    if (capitalInicialEl)
+      capitalInicialEl.value = "1000";
+    if (capitalFinalEl)
+      capitalFinalEl.value = "2000";
+    if (taxaEl)
+      taxaEl.value = "12";
+    if (aporteMensalEl)
+      aporteMensalEl.value = "50";
+    if (resultadoEl)
+      resultadoEl.innerHTML = "";
+    if (resultBody)
+      resultBody.innerHTML = "";
+    if (historicoBox)
+      historicoBox.classList.add("hidden");
+    if (summarySmall)
+      summarySmall.textContent = "Resultados e hist\xF3rico aparecem abaixo";
+    updateAporteVisibility();
+  });
+  function fillResultTable(rows) {
+    if (!resultBody)
+      return;
+    resultBody.innerHTML = rows.map((r) => `<tr><td>${r[0]}</td><td><strong>${r[1]}</strong></td></tr>`).join("");
+  }
+  calcularBtn.addEventListener("click", () => {
+    if (resultBody)
+      resultBody.innerHTML = "";
+    if (histList)
+      histList.innerHTML = "";
+    if (historicoBox)
+      historicoBox.classList.add("hidden");
+    const C0 = toNumber(capitalInicialEl.value);
+    const Cf = toNumber(capitalFinalEl.value);
+    const taxaNum = toNumber(taxaEl.value);
+    const tipoTaxa = tipoTaxaEl.value;
+    if (!Number.isFinite(C0) || C0 <= 0) {
+      alert("C0 inv\xE1lido");
+      return;
+    }
+    if (!Number.isFinite(Cf) || Cf <= 0) {
+      alert("Cf inv\xE1lido");
+      return;
+    }
+    if (!Number.isFinite(taxaNum)) {
+      alert("Taxa inv\xE1lida");
+      return;
+    }
+    const iMonthly = tipoTaxa === "annual" ? annualToMonthly(taxaNum / 100) : taxaNum / 100;
+    try {
       if (scenarioEl.value === "a") {
         const { monthsExact, monthsCeil } = scenarioA_calc(C0, Cf, iMonthly);
-        const human = monthsToYearsMonthsText(monthsExact, monthsCeil);
-        output.innerHTML = `<strong>Cen\xE1rio A</strong><br>- Meses exatos: ${monthsExact.toFixed(4)}<br>- Meses inteiros: ${monthsCeil} \u21D2 ${human}`;
-      } else {
-        const c0 = toNumber((_b = c0El == null ? void 0 : c0El.value) != null ? _b : "0");
-        if (!Number.isFinite(c0) || c0 < 0)
-          throw new Error("c0 inv\xE1lido.");
-        const res = scenarioB_calc(C0, c0, Cf, iMonthly, 1e4, true);
-        const human = monthsToYearsMonthsText(null, res.months);
-        output.innerHTML = `<strong>Cen\xE1rio B</strong><br>- Meses necess\xE1rios: ${res.months} \u21D2 ${human}<br>- Valor final: R$ ${res.finalValue.toFixed(2)}`;
-        if (res.history && res.history.length && historyBody) {
-          historyBody.innerHTML = res.history.map((h) => `
-            <tr>
-              <td>${h.month}</td>
-              <td>R$ ${h.valueBeforeInterest.toFixed(2)}</td>
-              <td>R$ ${h.valueAfterInterest.toFixed(2)}</td>
-              <td>${h.contribution ? "R$ " + h.contribution.toFixed(2) : "-"}</td>
-              <td>R$ ${h.valueAfterContribution.toFixed(2)}</td>
-            </tr>
-          `).join("");
-        }
+        const human2 = monthsToYearsMonthsText(monthsExact, monthsCeil);
+        const finalValueAtMonthsCeil = C0 * Math.pow(1 + iMonthly, monthsCeil);
+        const rendimento = finalValueAtMonthsCeil - C0;
+        const rows2 = [
+          ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
+          ["Capital alvo (C_f)", `R$ ${Cf.toFixed(2)}`],
+          ["Taxa mensal", `${(iMonthly * 100).toFixed(6)}% / m\xEAs`],
+          ["Meses (exatos)", `${monthsExact.toFixed(4)} meses`],
+          ["Meses inteiros necess\xE1rios", `${monthsCeil} meses \u2014 ${human2}`],
+          ["Valor final (ap\xF3s arredondamento)", formatCurrency(finalValueAtMonthsCeil)],
+          ["Rendimento (ganho)", formatCurrency(rendimento)]
+        ];
+        fillResultTable(rows2);
+        if (summarySmall)
+          summarySmall.textContent = "Resultado calculado por f\xF3rmula fechada (log).";
+        return;
       }
-    } catch (err) {
-      output.textContent = "Erro: " + (err && err.message ? err.message : String(err));
+      if (!aporteMensalEl) {
+        alert("Erro: campo de aporte n\xE3o encontrado no HTML.");
+        return;
+      }
+      const c0 = toNumber(aporteMensalEl.value) || 0;
+      const timing = momentoAporteEl && momentoAporteEl.value === "start" ? "start" : "end";
+      const res = scenarioB_calc(C0, c0, Cf, iMonthly, timing, 1e4, true);
+      const human = monthsToYearsMonthsText(null, res.months);
+      const rows = [
+        ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
+        ["Aporte mensal (c\u2080)", `R$ ${c0.toFixed(2)}`],
+        ["Taxa mensal", `${(iMonthly * 100).toFixed(6)}% / m\xEAs`],
+        ["Meses necess\xE1rios", `${res.months} meses \u2014 ${human}`],
+        ["Valor final alcan\xE7ado", formatCurrency(res.finalValue)],
+        ["Total aportado (soma)", formatCurrency(res.totalContributions)],
+        ["Rendimento (ganho)", formatCurrency(res.totalYield)]
+      ];
+      fillResultTable(rows);
+      if (summarySmall)
+        summarySmall.textContent = "Resultado por simula\xE7\xE3o m\xEAs-a-m\xEAs.";
+      if (res.history && res.history.length && histList && historicoBox) {
+        historicoBox.classList.remove("hidden");
+        res.history.forEach((h) => {
+          const item = document.createElement("div");
+          item.className = "historico-item";
+          item.innerHTML = `
+            <div class="month">M\xEAs ${h.month}</div>
+            <div class="values">
+              <div><strong>Antes juros:</strong> R$ ${Number(h.valueBeforeInterest).toFixed(2)}</div>
+              <div><strong>Ap\xF3s juros:</strong> R$ ${Number(h.valueAfterInterest).toFixed(2)}</div>
+              <div><strong>Aporte:</strong> ${h.contribution ? "R$ " + Number(h.contribution).toFixed(2) : "-"}</div>
+              <div><strong>Final:</strong> R$ ${Number(h.valueAfterContribution).toFixed(2)}</div>
+            </div>`;
+          histList.appendChild(item);
+        });
+      }
+    } catch (e) {
+      alert("Erro: " + (e && e.message ? e.message : String(e)));
     }
   });
 }

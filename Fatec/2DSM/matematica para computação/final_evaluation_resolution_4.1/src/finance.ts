@@ -1,8 +1,9 @@
 // src/finance.ts
-// Lógica pura (sem Node I/O). Exporta funções para uso no frontend.
+// Lógica pura — sem I/O. Agora scenarioB_calc aceita parâmetro `timing`: 'start' | 'end'.
+// Retorna months, finalValue, history (opcional), totalContributions, totalYield.
 
 export function toNumber(input: string): number {
-  const n = Number(input.replace(',', '.').trim());
+  const n = Number(String(input).replace(',', '.').trim());
   return Number.isFinite(n) ? n : NaN;
 }
 
@@ -37,14 +38,21 @@ export function scenarioA_calc(C0: number, Cf: number, iMonthly: number) {
 }
 
 /**
- * Cenário B: depósito inicial + aportes (simulação mês-a-mês)
- * Retorna { months, finalValue, history? } (history somente se captureHistory true).
+ * Cenário B: depósito inicial + aportes com opção de timing:
+ * timing = 'end' -> aporte no final do mês (após juros) — padrão
+ * timing = 'start' -> aporte no início do mês (antes dos juros)
+ *
+ * A regra do enunciado (aportes a partir do 2º mês) é mantida: os aportes começam no mês 2.
+ *
+ * Retorno:
+ * { months, finalValue, history?, totalContributions, totalYield }
  */
 export function scenarioB_calc(
   C0: number,
   c0: number,
   Cf: number,
   iMonthly: number,
+  timing: 'start' | 'end' = 'end',
   maxMonths = 10000,
   captureHistory = false
 ) {
@@ -55,31 +63,63 @@ export function scenarioB_calc(
 
   let value = C0;
   let month = 0;
-  const history: any[] = captureHistory ? [] : undefined as any;
+  const history: any[] | undefined = captureHistory ? [] : undefined;
+  let totalContributions = 0;
 
-  if (value >= Cf) return { months: 0, finalValue: value, history };
+  if (value >= Cf) {
+    const totalYield = value - C0 - totalContributions;
+    return { months: 0, finalValue: value, history, totalContributions, totalYield };
+  }
 
   while (month < maxMonths) {
     month += 1;
-    const before = value;
-    const afterInterest = value * (1 + iMonthly);
-    let contributed = 0;
-    if (month >= 2 && c0 > 0) {
-      value = afterInterest + c0;
-      contributed = c0;
+
+    // caso aporte no início do mês: aplicamos aporte (a partir do 2º mês) antes de juros
+    if (timing === 'start') {
+      if (month >= 2 && c0 > 0) {
+        value += c0;
+        totalContributions += c0;
+      }
+      // aplicamos juros sobre o valor já com aporte
+      const before = value;
+      value = value * (1 + iMonthly);
+      if (captureHistory) {
+        history!.push({
+          month,
+          contributionAppliedAt: 'start',
+          valueBeforeInterest: Number(before.toFixed(12)),
+          valueAfterInterest: Number(value.toFixed(12)),
+          contribution: (month >= 2 ? c0 : 0),
+          valueAfterContribution: Number(value.toFixed(12)) // same because contribution was before interest
+        });
+      }
     } else {
-      value = afterInterest;
+      // timing === 'end' (aporte no fim do mês)
+      // aplicamos juros primeiro
+      const before = value;
+      value = value * (1 + iMonthly);
+      // só depois, se month >=2, adicionamos aporte
+      if (month >= 2 && c0 > 0) {
+        value += c0;
+        totalContributions += c0;
+      }
+      if (captureHistory) {
+        history!.push({
+          month,
+          contributionAppliedAt: 'end',
+          valueBeforeInterest: Number(before.toFixed(12)),
+          valueAfterInterest: Number((before * (1 + iMonthly)).toFixed(12)),
+          contribution: (month >= 2 ? c0 : 0),
+          valueAfterContribution: Number(value.toFixed(12))
+        });
+      }
     }
-    if (captureHistory) {
-      history.push({
-        month,
-        valueBeforeInterest: Number(before.toFixed(12)),
-        valueAfterInterest: Number(afterInterest.toFixed(12)),
-        contribution: contributed,
-        valueAfterContribution: Number(value.toFixed(12))
-      });
+
+    if (value >= Cf) {
+      const totalYield = value - C0 - totalContributions;
+      return { months: month, finalValue: value, history, totalContributions, totalYield };
     }
-    if (value >= Cf) return { months: month, finalValue: value, history };
+
     if (Math.abs(iMonthly) < 1e-12 && c0 === 0) break;
   }
 
