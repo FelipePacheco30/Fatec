@@ -1,0 +1,84 @@
+/* Layout geral */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e3f7ff;
+  color: #34495e;
+}
+
+/* Header */
+.header {
+  background: #2ecc71;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Container principal */
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Títulos */
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* Inputs e selects */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Botões */
+button {
+  background: #2ecc71;
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+button:hover {
+  background: #27ae60;
+}
+
+/* Botão cancelar */
+.cancel-btn {
+  background: #e74c3c;
+}
+
+.cancel-btn:hover {
+  background: #c0392b;
+}
+
+/* Listagem de consultas */
+.appointment-item {
+  background: #f4f6f7;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 6px solid #2ecc71;
+}
+
+.appointment-item.cancelada {
+  border-left: 6px solid #e74c3c;
+  opacity: 0.7;
+}
