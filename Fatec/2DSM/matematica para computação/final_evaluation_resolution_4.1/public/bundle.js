@@ -1,6 +1,13 @@
 // src/finance.ts
 function annualToMonthly(iAnnualDecimal) {
-  return iAnnualDecimal / 12;
+  if (iAnnualDecimal <= -1)
+    throw new Error("taxa anual inv\xE1lida");
+  return Math.pow(1 + iAnnualDecimal, 1 / 12) - 1;
+}
+function monthlyToAnnual(iMonthlyDecimal) {
+  if (iMonthlyDecimal <= -1)
+    throw new Error("taxa mensal inv\xE1lida");
+  return Math.pow(1 + iMonthlyDecimal, 12) - 1;
 }
 function monthsToYearsMonthsText(monthsDecimal, monthsInt) {
   const years = Math.floor(monthsInt / 12);
@@ -130,10 +137,10 @@ function bindUI() {
     console.error("bindUI: elementos essenciais faltando no HTML. IDs esperados:", missing);
     return;
   }
-  function toNumber(input) {
-    if (input === void 0 || input === null)
+  function parseNumberInput(v) {
+    if (v === void 0 || v === null)
       return NaN;
-    const n = Number(String(input).replace(",", ".").trim());
+    const n = Number(String(v).replace(",", ".").trim());
     return Number.isFinite(n) ? n : NaN;
   }
   function formatCurrency(v) {
@@ -143,13 +150,23 @@ function bindUI() {
       return "R$ " + v.toFixed(2);
     }
   }
+  function fmtPercDecimal(d, digits = 6) {
+    return `${(d * 100).toFixed(digits)}%`;
+  }
+  function normalizeTipoTaxa(raw) {
+    if (!raw)
+      return "annual";
+    const s = String(raw).trim().toLowerCase();
+    if (s === "annual" || s === "anual" || s === "yearly")
+      return "annual";
+    if (s === "monthly" || s === "mensal" || s === "month")
+      return "monthly";
+    return s;
+  }
   function updateAporteVisibility() {
     if (!aporteContainer || !scenarioEl)
       return;
-    if (scenarioEl.value === "b")
-      aporteContainer.style.display = "block";
-    else
-      aporteContainer.style.display = "none";
+    aporteContainer.style.display = scenarioEl.value === "b" ? "block" : "none";
   }
   updateAporteVisibility();
   scenarioEl.addEventListener("change", updateAporteVisibility);
@@ -184,10 +201,11 @@ function bindUI() {
       histList.innerHTML = "";
     if (historicoBox)
       historicoBox.classList.add("hidden");
-    const C0 = toNumber(capitalInicialEl.value);
-    const Cf = toNumber(capitalFinalEl.value);
-    const taxaNum = toNumber(taxaEl.value);
-    const tipoTaxa = tipoTaxaEl.value;
+    const C0 = parseNumberInput(capitalInicialEl.value);
+    const Cf = parseNumberInput(capitalFinalEl.value);
+    const taxaNum = parseNumberInput(taxaEl.value);
+    const tipoTaxaRaw = tipoTaxaEl.value;
+    const tipoTaxa = normalizeTipoTaxa(tipoTaxaRaw);
     if (!Number.isFinite(C0) || C0 <= 0) {
       alert("C0 inv\xE1lido");
       return;
@@ -200,7 +218,27 @@ function bindUI() {
       alert("Taxa inv\xE1lida");
       return;
     }
-    const iMonthly = tipoTaxa === "annual" ? annualToMonthly(taxaNum / 100) : taxaNum / 100;
+    let iMonthly;
+    let obsHtml = "";
+    let annualEqFormattedShort = "";
+    let annualEqFormattedPrecise = "";
+    if (tipoTaxa === "annual") {
+      const iAnnualDecimal = taxaNum / 100;
+      iMonthly = annualToMonthly(iAnnualDecimal);
+      obsHtml = `<div style="line-height:1.25; text-align:left;">
+                 Taxa anual informada: ${iAnnualDecimal * 100}%<br>
+                 mensal equivalente: ${(iMonthly * 100).toFixed(2)}% (\u2248 ${(iMonthly * 100).toFixed(6)}%)
+               </div>`;
+    } else {
+      iMonthly = taxaNum / 100;
+      const annualEq = monthlyToAnnual(iMonthly);
+      annualEqFormattedShort = (annualEq * 100).toFixed(2);
+      annualEqFormattedPrecise = (annualEq * 100).toFixed(6);
+      obsHtml = `<div style="line-height:1.25; text-align:left;">
+                 Taxa mensal informada: ${iMonthly * 100}%<br>
+                 anual equivalente: ${annualEqFormattedShort}% (\u2248 ${annualEqFormattedPrecise}%)
+               </div>`;
+    }
     try {
       if (scenarioEl.value === "a") {
         const { monthsExact, monthsCeil } = scenarioA_calc(C0, Cf, iMonthly);
@@ -208,14 +246,19 @@ function bindUI() {
         const finalValueAtMonthsCeil = C0 * Math.pow(1 + iMonthly, monthsCeil);
         const rendimento = finalValueAtMonthsCeil - C0;
         const rows2 = [
-          ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
-          ["Capital alvo (C_f)", `R$ ${Cf.toFixed(2)}`],
-          ["Taxa mensal", `${iMonthly * 100}% / m\xEAs`],
+          ["Capital inicial (C\u2080)", `${formatCurrency(C0)}`],
+          ["Capital alvo (C_f)", `${formatCurrency(Cf)}`],
+          // aqui passamos o HTML diretamente — fillResultTable não escapará
+          ["Observa\xE7\xE3o taxa", `${obsHtml}`],
+          ["Taxa mensal efetiva", `${fmtPercDecimal(iMonthly)} / m\xEAs`],
           ["Meses (exatos)", `${monthsExact.toFixed(4)} meses`],
           ["Meses inteiros necess\xE1rios", `${monthsCeil} meses \u2014 ${human2}`],
           ["Valor final (ap\xF3s arredondamento)", formatCurrency(finalValueAtMonthsCeil)],
           ["Rendimento (ganho)", formatCurrency(rendimento)]
         ];
+        if (tipoTaxa === "monthly") {
+          rows2.splice(4, 0, ["Taxa anual efetiva", `${annualEqFormattedShort}% (\u2248 ${annualEqFormattedPrecise}%)`]);
+        }
         fillResultTable(rows2);
         if (summarySmall)
           summarySmall.textContent = "Resultado calculado por f\xF3rmula fechada (log).";
@@ -225,19 +268,24 @@ function bindUI() {
         alert("Erro: campo de aporte n\xE3o encontrado no HTML.");
         return;
       }
-      const c0 = toNumber(aporteMensalEl.value) || 0;
+      const c0 = parseNumberInput(aporteMensalEl.value) || 0;
       const timing = momentoAporteEl && momentoAporteEl.value === "start" ? "start" : "end";
       const res = scenarioB_calc(C0, c0, Cf, iMonthly, timing, 1e4, true);
       const human = monthsToYearsMonthsText(null, res.months);
       const rows = [
-        ["Capital inicial (C\u2080)", `R$ ${C0.toFixed(2)}`],
-        ["Aporte mensal (c\u2080)", `R$ ${c0.toFixed(2)}`],
-        ["Taxa mensal", `${iMonthly * 100}% / m\xEAs`],
+        ["Capital inicial (C\u2080)", `${formatCurrency(C0)}`],
+        ["Aporte mensal (c\u2080)", `${formatCurrency(c0)}`],
+        ["Observa\xE7\xE3o taxa", `${obsHtml}`],
+        ["Taxa mensal efetiva", `${fmtPercDecimal(iMonthly)} / m\xEAs`],
+        // placeholder para inserir taxa anual equivalente se for mensal (será inserido abaixo)
         ["Meses necess\xE1rios", `${res.months} meses \u2014 ${human}`],
         ["Valor final alcan\xE7ado", formatCurrency(res.finalValue)],
         ["Total aportado (soma)", formatCurrency(res.totalContributions)],
         ["Rendimento (ganho)", formatCurrency(res.totalYield)]
       ];
+      if (tipoTaxa === "monthly") {
+        rows.splice(4, 0, ["Taxa anual efetiva", `${annualEqFormattedShort}% (\u2248 ${annualEqFormattedPrecise}%)`]);
+      }
       fillResultTable(rows);
       if (summarySmall)
         summarySmall.textContent = "Resultado por simula\xE7\xE3o m\xEAs-a-m\xEAs.";
@@ -247,13 +295,13 @@ function bindUI() {
           const item = document.createElement("div");
           item.className = "historico-item";
           item.innerHTML = `
-            <div class="month">M\xEAs ${h.month}</div>
-            <div class="values">
-              <div><strong>Antes juros:</strong> R$ ${Number(h.valueBeforeInterest).toFixed(2)}</div>
-              <div><strong>Ap\xF3s juros:</strong> R$ ${Number(h.valueAfterInterest).toFixed(2)}</div>
-              <div><strong>Aporte:</strong> ${h.contribution ? "R$ " + Number(h.contribution).toFixed(2) : "-"}</div>
-              <div><strong>Final:</strong> R$ ${Number(h.valueAfterContribution).toFixed(2)}</div>
-            </div>`;
+          <div class="month">M\xEAs ${h.month}</div>
+          <div class="values">
+            <div><strong>Antes juros:</strong> ${formatCurrency(Number(h.valueBeforeInterest))}</div>
+            <div><strong>Ap\xF3s juros:</strong> ${formatCurrency(Number(h.valueAfterInterest))}</div>
+            <div><strong>Aporte:</strong> ${h.contribution ? formatCurrency(Number(h.contribution)) : "-"}</div>
+            <div><strong>Final:</strong> ${formatCurrency(Number(h.valueAfterContribution))}</div>
+          </div>`;
           histList.appendChild(item);
         });
       }

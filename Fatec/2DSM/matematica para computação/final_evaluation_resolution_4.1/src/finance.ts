@@ -1,10 +1,19 @@
+// src/finance.ts
 export function toNumber(input: string): number {
   const n = Number(String(input).replace(',', '.').trim());
   return Number.isFinite(n) ? n : NaN;
 }
 
-export function annualToMonthly(iAnnualDecimal: number) {
-  return iAnnualDecimal / 12;
+// função de taxa equivalente: anual -> mensal
+export function annualToMonthly(iAnnualDecimal: number): number {
+  if (iAnnualDecimal <= -1) throw new Error('taxa anual inválida');
+  return Math.pow(1 + iAnnualDecimal, 1 / 12) - 1;
+}
+
+// função nova: mensal -> anual equivalente
+export function monthlyToAnnual(iMonthlyDecimal: number): number {
+  if (iMonthlyDecimal <= -1) throw new Error('taxa mensal inválida');
+  return Math.pow(1 + iMonthlyDecimal, 12) - 1;
 }
 
 export function monthsToYearsMonthsText(monthsDecimal: number | null, monthsInt: number) {
