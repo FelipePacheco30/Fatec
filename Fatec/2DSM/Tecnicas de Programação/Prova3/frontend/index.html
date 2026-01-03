@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prova3 - Funcionários</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Gestão de Funcionários — Prova III</h1>
+      <p class="lead">Visualize os mensalistas e horistas com filtros, detalhes e validação de e-mail.</p>
+    </div>
+  </header>
+  <main class="wrap main-grid">
+    <aside class="panel panel-left">
+      <div class="card">
+        <h2>Filtrar</h2>
+        <div class="filters">
+          <label class="radio">
+            <input type="radio" name="filtro" value="todos" checked> Todos
+          </label>
+          <label class="radio">
+            <input type="radio" name="filtro" value="mensalista"> Mensalistas
+          </label>
+          <label class="radio">
+            <input type="radio" name="filtro" value="horista"> Horistas
+          </label>
+        </div>
+        <div class="actions">
+          <button id="btnRefresh" class="btn">Atualizar</button>
+        </div>
+      </div>
+      <div class="card info">
+        <h3>Resumo</h3>
+        <p id="stats">Carregando...</p>
+      </div>
+    </aside>
+    <section class="panel panel-right">
+      <div id="list" class="list"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <small>Prova III — Técnicas de Programação I</small>
+    </div>
+  </footer>
+  <script>
+    let dados = []
+    async function carregar() {
+      const listEl = document.getElementById('list')
+      const statsEl = document.getElementById('stats')
+      listEl.innerHTML = '<p class="loading">Carregando...</p>'
+      try {
+        const res = await fetch('/api/saida-json')
+        const json = await res.json()
+        dados = json
+        montarLista('todos')
+        atualizarResumo()
+      } catch (e) {
+        listEl.innerHTML = '<p class="error">Erro ao carregar os dados</p>'
+        statsEl.innerText = '—'
+      }
+    }
+    function montarLista(filtro) {
+      const listEl = document.getElementById('list')
+      listEl.innerHTML = ''
+      const filtrado = dados.filter(d => filtro === 'todos' ? true : d.tipo === filtro)
+      if (filtrado.length === 0) {
+        listEl.innerHTML = '<p class="empty">Nenhum registro para o filtro selecionado.</p>'
+        return
+      }
+      filtrado.forEach(item => {
+        const card = document.createElement('article')
+        card.className = 'item'
+        const top = document.createElement('div')
+        top.className = 'item-top'
+        const title = document.createElement('h3')
+        title.innerText = (item.tipo === 'mensalista' ? 'MENSALISTA' : 'HORISTA') + ' — ' + item.nome
+        const meta = document.createElement('div')
+        meta.className = 'meta'
+        const mat = document.createElement('span')
+        mat.className = 'mat'
+        mat.innerText = 'Matrícula: ' + item.matricula
+        const email = document.createElement('span')
+        email.className = 'email ' + (item.emailValido ? 'valid' : 'invalid')
+        email.innerText = item.email + ' - ' + (item.emailValido ? 'Válido' : 'Inválido')
+        meta.appendChild(mat)
+        meta.appendChild(email)
+        top.appendChild(title)
+        top.appendChild(meta)
+        const pre = document.createElement('pre')
+        pre.className = 'item-text'
+        pre.innerText = item.texto
+        card.appendChild(top)
+        card.appendChild(pre)
+        listEl.appendChild(card)
+      })
+    }
+    function atualizarResumo() {
+      const statsEl = document.getElementById('stats')
+      const total = dados.length
+      const mens = dados.filter(d=>d.tipo==='mensalista').length
+      const hor = dados.filter(d=>d.tipo==='horista').length
+      const inval = dados.filter(d=>!d.emailValido).length
+      statsEl.innerText = `Total: ${total} · Mensalistas: ${mens} · Horistas: ${hor} · E-mails inválidos: ${inval}`
+    }
+    document.getElementById('btnRefresh').addEventListener('click', () => carregar())
+    document.querySelectorAll('input[name="filtro"]').forEach(r => {
+      r.addEventListener('change', (e) => {
+        const v = document.querySelector('input[name="filtro"]:checked').value
+        montarLista(v)
+      })
+    })
+    carregar()
+  </script>
+</body>
+</html>
