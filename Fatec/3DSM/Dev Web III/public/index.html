@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Clientes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Cadastro de Clientes</h1>
+  <!-- Formulário de cadastro -->
+  <form id="form-cliente">
+    <input type="hidden" id="cliente-id">
+    <input type="text" id="nome" placeholder="Nome" required>
+    <input type="email" id="email" placeholder="E-mail" required>
+    <input type="text" id="telefone" placeholder="Telefone" required>
+    <button type="submit">Salvar</button>
+    <button type="button" id="btn-cancelar">Cancelar</button>
+  </form>
+  <h2>Lista de Clientes</h2>
+  <table border="1">
+  <thead>
+  <tr>
+  <th>Nome</th>
+  <th>E-mail</th>
+  <th>Telefone</th>
+  <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody id="clientes-lista"></tbody>
+  </table>
+  <script src="script.js"></script>
+</body>
+</html>
