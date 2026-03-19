@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LeadFactory = void 0;
 const constants_1 = require("../../config/constants");
 class LeadFactory {
+    // [Factory] Cria um LeadDto com configuracao inicial padrao (estagio/status).
     criar(input, id) {
         const now = new Date().toISOString();
         return {

@@ -11,6 +11,7 @@ export interface ILeadObserver {
 
 /** Observador que apenas loga eventos (ex.: para auditoria ou integrações futuras). */
 export class LoggingLeadObserver implements ILeadObserver {
+  // [Observer] Trata o evento de mudanca de uma lead (estagio/status) e registra em log.
   onLeadAtualizada(
     lead: LeadDto,
     alteracoes: { estagio?: Estagio; status?: Status }

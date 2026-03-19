@@ -18,11 +18,13 @@ export class EstagioState implements IEstagioState {
     return this.estagio;
   }
 
+  // [State] Consulta a tabela de transicoes permitidas e verifica se existe o "de -> para".
   podeTransicionarPara(proximo: Estagio): boolean {
     const permitidos = TRANSICOES_ESTAGIO[this.estagio];
     return permitidos.includes(proximo);
   }
 
+  // [State] Se a transicao nao for permitida, lancamos erro (bloqueia evolucao incoerente).
   transicionar(proximo: Estagio): IEstagioState {
     if (!this.podeTransicionarPara(proximo)) {
       throw new Error(

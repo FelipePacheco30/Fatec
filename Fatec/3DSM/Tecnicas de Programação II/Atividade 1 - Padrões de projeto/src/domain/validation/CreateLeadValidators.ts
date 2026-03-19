@@ -3,6 +3,7 @@ import type { CreateLeadRequest } from '../entities/Lead';
 import { BaseValidationHandler } from './ValidationHandler';
 
 export class CamposObrigatoriosValidator extends BaseValidationHandler<CreateLeadRequest> {
+  // [Chain] Regra: garante que os campos minimos existem.
   protected executarValidacao(dados: CreateLeadRequest) {
     if (!dados.nomeCliente?.trim()) {
       return { valido: false, mensagem: 'Nome do cliente é obrigatório.' };
@@ -21,6 +22,7 @@ export class CamposObrigatoriosValidator extends BaseValidationHandler<CreateLea
 }
 
 export class CanalOrigemValidator extends BaseValidationHandler<CreateLeadRequest> {
+  // [Chain] Regra: garante que canalOrigem esta na lista permitida.
   protected executarValidacao(dados: CreateLeadRequest) {
     const canal = dados.canalOrigem?.trim().toLowerCase();
     const validos = CANAIS_ORIGEM.map((c) => c.toLowerCase());

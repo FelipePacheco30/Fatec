@@ -12,6 +12,10 @@ function createLeadsRouter(facade: ILeadServiceFacade, validationChain: ReturnTy
   /** POST /leads - Cadastro de lead */
   router.post('/', (req: Request, res: Response) => {
     const body = req.body as CreateLeadRequest;
+
+    // [Chain of Responsibility] Validacao em etapas:
+    // 1) campos obrigatorios
+    // 2) canal de origem valido
     const validacao = validationChain.validar(body);
     if (!validacao.valido) {
       return res.status(400).json({ erro: validacao.mensagem });
@@ -75,6 +79,9 @@ function createLeadsRouter(facade: ILeadServiceFacade, validationChain: ReturnTy
       }
       input.status = status as Status;
     }
+
+    // Nota: a regra de "de/para permitido" (coerencia de negociacao)
+    // nao e validada aqui; ela e garantida no facade via classes de State.
     if (!input.estagio && !input.status) {
       return res.status(400).json({
         erro: 'Informe estagio e/ou status para evoluir a negociação.',

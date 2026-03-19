@@ -4,12 +4,17 @@ exports.LeadServiceFacade = void 0;
 const EstagioState_1 = require("../domain/state/EstagioState");
 const StatusState_1 = require("../domain/state/StatusState");
 class LeadServiceFacade {
-    constructor(leadFactory, repository, subject, gerarId) {
+    constructor(
+    // [Composition/DI] O facade recebe suas dependencias prontas.
+    // Isso deixa o fluxo de negocio centralizado e facilita trocar implementacoes (ex.: repository).
+    leadFactory, repository, subject, gerarId) {
         this.leadFactory = leadFactory;
         this.repository = repository;
         this.subject = subject;
         this.gerarId = gerarId;
     }
+    // [Facade] Orquestra o fluxo completo de cadastro:
+    // Factory (estado inicial) -> Repository (persistencia em memoria) -> resposta da API.
     cadastrarLead(input) {
         const id = this.gerarId();
         const lead = this.leadFactory.criar(input, id);
@@ -22,10 +27,16 @@ class LeadServiceFacade {
     obterLead(id) {
         return this.repository.buscarPorId(id);
     }
+    // [Facade] Orquestra a evolucao da negociacao:
+    // 1) bloqueia se a lead ja esta finalizada
+    // 2) valida/transiciona estagio e/ou status via State
+    // 3) persiste atualizacao
+    // 4) notifica observadores (Observer)
     evoluirNegociacao(id, input) {
         const lead = this.repository.buscarPorId(id);
         if (!lead)
             return { sucesso: false, erro: 'Lead não encontrada.' };
+        // [State] Regra de negocio: status finalizado impede evolucao.
         const statusState = new StatusState_1.StatusState(lead.status);
         if (statusState.isFinalizado()) {
             return { sucesso: false, erro: 'Lead finalizada não pode evoluir na negociação.' };
@@ -34,12 +45,14 @@ class LeadServiceFacade {
         let estagioAtual = lead.estagio;
         let statusAtual = lead.status;
         try {
+            // [State] Validamos a transicao do estagio somente se foi solicitado.
             if (input.estagio) {
                 const estagioState = new EstagioState_1.EstagioState(lead.estagio);
                 const novoState = estagioState.transicionar(input.estagio);
                 estagioAtual = novoState.getEstagio();
                 alteracoes.estagio = estagioAtual;
             }
+            // [State] Validamos a transicao do status somente se foi solicitado.
             if (input.status) {
                 const statusStateAtual = new StatusState_1.StatusState(lead.status);
                 const novoStatusState = statusStateAtual.transicionar(input.status);
@@ -62,6 +75,7 @@ class LeadServiceFacade {
             status: statusAtual,
             updatedAt: new Date().toISOString(),
         };
+        // [Facade] Persistimos e entao emitimos o evento de mudanca.
         this.repository.atualizar(id, atualizada);
         this.subject.notificar(atualizada, alteracoes);
         return { sucesso: true, lead: atualizada };

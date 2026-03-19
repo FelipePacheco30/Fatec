@@ -75,6 +75,8 @@ export function EvoluirDialog({
       })
       .catch((e) => {
         setError(e.message);
+      })
+      .finally(() => {
         setLoading(false);
       });
   };

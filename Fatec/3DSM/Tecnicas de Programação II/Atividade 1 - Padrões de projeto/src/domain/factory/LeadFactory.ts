@@ -15,6 +15,7 @@ export class LeadFactory implements ILeadFactory {
   private static readonly ESTAGIO_INICIAL = ESTAGIOS[0]; // Contato inicial
   private static readonly STATUS_INICIAL = STATUS[0]; // Aberto
 
+  // [Factory] Cria um LeadDto com configuracao inicial padrao (estagio/status).
   criar(input: CreateLeadInput, id: string): LeadDto {
     const now = new Date().toISOString();
     return {

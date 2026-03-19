@@ -4,6 +4,7 @@ exports.CanalOrigemValidator = exports.CamposObrigatoriosValidator = void 0;
 const constants_1 = require("../../config/constants");
 const ValidationHandler_1 = require("./ValidationHandler");
 class CamposObrigatoriosValidator extends ValidationHandler_1.BaseValidationHandler {
+    // [Chain] Regra: garante que os campos minimos existem.
     executarValidacao(dados) {
         if (!dados.nomeCliente?.trim()) {
             return { valido: false, mensagem: 'Nome do cliente é obrigatório.' };
@@ -22,6 +23,7 @@ class CamposObrigatoriosValidator extends ValidationHandler_1.BaseValidationHand
 }
 exports.CamposObrigatoriosValidator = CamposObrigatoriosValidator;
 class CanalOrigemValidator extends ValidationHandler_1.BaseValidationHandler {
+    // [Chain] Regra: garante que canalOrigem esta na lista permitida.
     executarValidacao(dados) {
         const canal = dados.canalOrigem?.trim().toLowerCase();
         const validos = constants_1.CANAIS_ORIGEM.map((c) => c.toLowerCase());

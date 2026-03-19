@@ -15,6 +15,11 @@ export function createApp(): express.Application {
   const app = express();
   app.use(express.json());
 
+  // [Composition Root] Montagem das dependencias:
+  // - repository em memoria (persistencia simples)
+  // - observer/log (para auditoria de mudancas)
+  // - facade (orquestra o dominio com Factory + State + Observer)
+  // - chain de validacao (Chain of Responsibility) para o cadastro
   const repository = new LeadRepositoryEmMemoria();
   const subject = new LeadSubject();
   subject.adicionarObserver(new LoggingLeadObserver());

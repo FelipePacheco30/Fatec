@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoggingLeadObserver = void 0;
 /** Observador que apenas loga eventos (ex.: para auditoria ou integrações futuras). */
 class LoggingLeadObserver {
+    // [Observer] Trata o evento de mudanca de uma lead (estagio/status) e registra em log.
     onLeadAtualizada(lead, alteracoes) {
         const partes = [`Lead ${lead.id} (${lead.nomeCliente})`];
         if (alteracoes.estagio)

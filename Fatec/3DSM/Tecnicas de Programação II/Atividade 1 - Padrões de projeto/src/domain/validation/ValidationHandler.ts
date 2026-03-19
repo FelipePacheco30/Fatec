@@ -15,11 +15,13 @@ export interface IValidationHandler<T> {
 export abstract class BaseValidationHandler<T> implements IValidationHandler<T> {
   protected proximo: IValidationHandler<T> | null = null;
 
+  // [Chain of Responsibility] Encadeia o handler atual com o proximo.
   setProximo(handler: IValidationHandler<T>): IValidationHandler<T> {
     this.proximo = handler;
     return handler;
   }
 
+  // [Chain of Responsibility] Executa validacao local e decide se continua a cadeia.
   validar(dados: T): ValidationResult {
     const resultado = this.executarValidacao(dados);
     if (!resultado.valido) return resultado;
@@ -27,5 +29,6 @@ export abstract class BaseValidationHandler<T> implements IValidationHandler<T> 
     return { valido: true };
   }
 
+  // Cada handler define sua regra especifica (campos obrigatorios, canal valido, etc.).
   protected abstract executarValidacao(dados: T): ValidationResult;
 }

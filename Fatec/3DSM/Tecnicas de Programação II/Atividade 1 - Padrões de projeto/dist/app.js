@@ -18,6 +18,11 @@ function gerarId() {
 function createApp() {
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
+    // [Composition Root] Montagem das dependencias:
+    // - repository em memoria (persistencia simples)
+    // - observer/log (para auditoria de mudancas)
+    // - facade (orquestra o dominio com Factory + State + Observer)
+    // - chain de validacao (Chain of Responsibility) para o cadastro
     const repository = new LeadRepository_1.LeadRepositoryEmMemoria();
     const subject = new LeadSubject_1.LeadSubject();
     subject.adicionarObserver(new LeadObserver_1.LoggingLeadObserver());
