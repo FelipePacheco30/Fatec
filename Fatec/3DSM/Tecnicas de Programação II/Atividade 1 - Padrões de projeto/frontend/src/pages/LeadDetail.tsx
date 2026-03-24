@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { EvoluirDialog } from "@/components/leads/EvoluirDialog";
 import { cn } from "@/lib/utils";
+import { formatarTelefoneBr } from "@/lib/leadInput";
 
 function statusVariant(
   status: string
@@ -123,7 +124,9 @@ export function LeadDetail() {
               <p className="text-xs font-medium text-muted-foreground">
                 Telefone
               </p>
-              <p className="font-medium">{lead.telefone}</p>
+              <p className="font-medium">
+                {formatarTelefoneBr(lead.telefone)}
+              </p>
             </div>
             <div>
               <p className="text-xs font-medium text-muted-foreground">

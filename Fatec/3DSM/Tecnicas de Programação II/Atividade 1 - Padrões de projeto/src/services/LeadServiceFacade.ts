@@ -64,6 +64,14 @@ export class LeadServiceFacade implements ILeadServiceFacade {
       return { sucesso: false, erro: 'Lead finalizada não pode evoluir na negociação.' };
     }
 
+    // Uma dimensão por requisição: evita pular a ordem natural de eventos via curl/UI.
+    if (input.estagio && input.status) {
+      return {
+        sucesso: false,
+        erro: 'Envie apenas estágio ou apenas status por vez, respeitando a sequência da negociação.',
+      };
+    }
+
     const alteracoes: { estagio?: Estagio; status?: Status } = {};
     let estagioAtual = lead.estagio;
     let statusAtual = lead.status;
@@ -79,6 +87,22 @@ export class LeadServiceFacade implements ILeadServiceFacade {
 
       // [State] Validamos a transicao do status somente se foi solicitado.
       if (input.status) {
+        const estagioParaCoerencia = estagioAtual;
+        if (input.status === 'Em negociação' && estagioParaCoerencia === 'Contato inicial') {
+          throw new Error(
+            'Status "Em negociação" só é permitido após avançar o estágio além de "Contato inicial".'
+          );
+        }
+        if (
+          (input.status === 'Finalizado com venda' ||
+            input.status === 'Finalizado sem venda') &&
+          estagioParaCoerencia !== 'Aguardando pagamento'
+        ) {
+          throw new Error(
+            'Finalização só é permitida com estágio "Aguardando pagamento".'
+          );
+        }
+
         const statusStateAtual = new StatusState(lead.status);
         const novoStatusState = statusStateAtual.transicionar(input.status);
         statusAtual = novoStatusState.getStatus();

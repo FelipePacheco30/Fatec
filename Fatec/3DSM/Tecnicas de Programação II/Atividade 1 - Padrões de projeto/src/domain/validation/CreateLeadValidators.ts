@@ -35,3 +35,42 @@ export class CanalOrigemValidator extends BaseValidationHandler<CreateLeadReques
     return { valido: true };
   }
 }
+
+const ONZE_DIGITOS = 11;
+
+function digitosTelefone(raw: string): string {
+  return (raw ?? '').replace(/\D/g, '').slice(0, ONZE_DIGITOS);
+}
+
+/** [Chain] Formato de nome, telefone (11 dígitos) e veículo (letras+números, sem especiais). */
+export class DadosLeadFormatoValidator extends BaseValidationHandler<CreateLeadRequest> {
+  protected executarValidacao(dados: CreateLeadRequest) {
+    const nome = dados.nomeCliente?.trim() ?? '';
+    if (!/^[\p{L}\s]+$/u.test(nome) || !/[\p{L}]/u.test(nome)) {
+      return {
+        valido: false,
+        mensagem: 'Nome deve conter apenas letras (e espaços entre palavras).',
+      };
+    }
+
+    const tel = digitosTelefone(dados.telefone ?? '');
+    if (tel.length !== ONZE_DIGITOS) {
+      return {
+        valido: false,
+        mensagem:
+          'Telefone deve ter 11 dígitos (DDD + número celular), no formato XX XXXXX-XXXX.',
+      };
+    }
+
+    const veiculo = dados.veiculoInteresse?.trim() ?? '';
+    if (!/^(?=.*\p{L})(?=.*\p{N})[\p{L}\p{N}\s]+$/u.test(veiculo)) {
+      return {
+        valido: false,
+        mensagem:
+          'Veículo de interesse deve combinar letras e números, sem caracteres especiais.',
+      };
+    }
+
+    return { valido: true };
+  }
+}

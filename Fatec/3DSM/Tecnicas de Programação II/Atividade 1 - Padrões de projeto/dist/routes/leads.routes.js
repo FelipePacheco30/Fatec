@@ -20,9 +20,10 @@ function createLeadsRouter(facade, validationChain) {
         if (!canal) {
             return res.status(400).json({ erro: 'Canal de origem inválido.' });
         }
+        const telefoneDigitos = (body.telefone ?? '').replace(/\D/g, '').slice(0, 11);
         const resultado = facade.cadastrarLead({
             nomeCliente: body.nomeCliente.trim(),
-            telefone: body.telefone.trim(),
+            telefone: telefoneDigitos,
             canalOrigem: canal,
             veiculoInteresse: body.veiculoInteresse.trim(),
         });
@@ -72,8 +73,7 @@ function createLeadsRouter(facade, validationChain) {
             }
             input.status = status;
         }
-        // Nota: a regra de "de/para permitido" (coerencia de negociacao)
-        // nao e validada aqui; ela e garantida no facade via classes de State.
+        // Transições válidas (State) e continuidade estágio/status são validadas no facade.
         if (!input.estagio && !input.status) {
             return res.status(400).json({
                 erro: 'Informe estagio e/ou status para evoluir a negociação.',

@@ -14,6 +14,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  extrairDigitosTelefone,
+  filtrarNomeLetras,
+  filtrarVeiculoAlfanumerico,
+  formatarTelefoneBr,
+  validarNomeCliente,
+  validarTelefoneDigitos,
+  validarVeiculoInteresse,
+} from "@/lib/leadInput";
 
 export function NovaLead() {
   const navigate = useNavigate();
@@ -33,11 +42,27 @@ export function NovaLead() {
       setError("Selecione o canal de origem.");
       return;
     }
+    const nomeErr = validarNomeCliente(form.nomeCliente);
+    if (nomeErr) {
+      setError(nomeErr);
+      return;
+    }
+    const telDigits = extrairDigitosTelefone(form.telefone);
+    const telErr = validarTelefoneDigitos(telDigits);
+    if (telErr) {
+      setError(telErr);
+      return;
+    }
+    const veiErr = validarVeiculoInteresse(form.veiculoInteresse);
+    if (veiErr) {
+      setError(veiErr);
+      return;
+    }
     setLoading(true);
     api.leads
       .create({
         nomeCliente: form.nomeCliente.trim(),
-        telefone: form.telefone.trim(),
+        telefone: telDigits,
         canalOrigem: form.canalOrigem,
         veiculoInteresse: form.veiculoInteresse.trim(),
       })
@@ -80,7 +105,10 @@ export function NovaLead() {
                 placeholder="Ex.: João Silva"
                 value={form.nomeCliente}
                 onChange={(e) =>
-                  setForm((f) => ({ ...f, nomeCliente: e.target.value }))
+                  setForm((f) => ({
+                    ...f,
+                    nomeCliente: filtrarNomeLetras(e.target.value),
+                  }))
                 }
                 required
               />
@@ -89,10 +117,16 @@ export function NovaLead() {
               <Label htmlFor="telefone">Telefone</Label>
               <Input
                 id="telefone"
-                placeholder="Ex.: 11999999999"
+                inputMode="numeric"
+                autoComplete="tel-national"
+                placeholder="Ex.: 11 98765-4321"
+                maxLength={14}
                 value={form.telefone}
                 onChange={(e) =>
-                  setForm((f) => ({ ...f, telefone: e.target.value }))
+                  setForm((f) => ({
+                    ...f,
+                    telefone: formatarTelefoneBr(e.target.value),
+                  }))
                 }
                 required
               />
@@ -125,7 +159,10 @@ export function NovaLead() {
                 placeholder="Ex.: Fiat Argo 2024"
                 value={form.veiculoInteresse}
                 onChange={(e) =>
-                  setForm((f) => ({ ...f, veiculoInteresse: e.target.value }))
+                  setForm((f) => ({
+                    ...f,
+                    veiculoInteresse: filtrarVeiculoAlfanumerico(e.target.value),
+                  }))
                 }
                 required
               />
