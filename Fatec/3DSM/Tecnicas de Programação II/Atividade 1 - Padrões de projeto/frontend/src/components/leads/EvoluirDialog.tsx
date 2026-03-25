@@ -87,8 +87,8 @@ export function EvoluirDialog({
         <DialogHeader>
           <DialogTitle>Evoluir negociação</DialogTitle>
           <DialogDescription>
-            Atualize um item por vez (estágio ou status), na ordem do fluxo da
-            negociação.
+            Você pode alterar só o estágio, só o status ou os dois de uma vez.
+            As transições continuam sujeitas às regras de negócio.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,13 +101,7 @@ export function EvoluirDialog({
           {estagiosOpcoes.length > 0 && (
             <div className="space-y-2">
               <Label>Novo estágio</Label>
-              <Select
-                value={estagio}
-                onValueChange={(v) => {
-                  setEstagio(v);
-                  setStatus("");
-                }}
-              >
+              <Select value={estagio} onValueChange={setEstagio}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione o estágio" />
                 </SelectTrigger>
@@ -125,13 +119,7 @@ export function EvoluirDialog({
           {statusOpcoes.length > 0 && (
             <div className="space-y-2">
               <Label>Novo status</Label>
-              <Select
-                value={status}
-                onValueChange={(v) => {
-                  setStatus(v);
-                  setEstagio("");
-                }}
-              >
+              <Select value={status} onValueChange={setStatus}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione o status" />
                 </SelectTrigger>
