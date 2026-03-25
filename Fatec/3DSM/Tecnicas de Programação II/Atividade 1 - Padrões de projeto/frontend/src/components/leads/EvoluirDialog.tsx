@@ -30,10 +30,7 @@ interface EvoluirDialogProps {
 const ESTAGIOS_PROXIMOS: Record<string, string[]> = {
   "Contato inicial": ["Enviou proposta"],
   "Enviou proposta": ["Aguardando resposta do cliente"],
-  "Aguardando resposta do cliente": [
-    "Aguardando pagamento",
-    "Enviou proposta",
-  ],
+  "Aguardando resposta do cliente": ["Aguardando pagamento"],
   "Aguardando pagamento": [],
 };
 

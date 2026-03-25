@@ -33,7 +33,7 @@ exports.STATUS = [
 exports.TRANSICOES_ESTAGIO = {
     'Contato inicial': ['Enviou proposta'],
     'Enviou proposta': ['Aguardando resposta do cliente'],
-    'Aguardando resposta do cliente': ['Aguardando pagamento', 'Enviou proposta'],
+    'Aguardando resposta do cliente': ['Aguardando pagamento'],
     'Aguardando pagamento': [],
 };
 /** Transições de status permitidas (de -> para). */
