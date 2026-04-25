@@ -5,17 +5,17 @@ Aplicação web em TypeScript + Express para consulta de clima em tempo real uti
 ## Requisitos
 
 - Node.js 18+
-- API Key gratuita da WeatherAPI
+- npm
 
 ## Configuração
 
-1. Copie o arquivo de ambiente:
-   - `.env.example` para `.env`
-2. Configure:
-   - `WEATHER_API_KEY=sua_chave_api_weatherapi`
-   - `PORT=3000`
+O arquivo `.env` já está incluído no projeto de propósito, com a chave necessária para a atividade funcionar ao ser clonada.
+
+> Observação: em projetos reais, o `.env` não deve ser versionado porque pode expor credenciais. Neste caso ele foi mantido no repositório intencionalmente, conforme solicitado para a entrega da atividade.
 
 ## Execução
+
+Na pasta do projeto, rode:
 
 ```bash
 npm install
@@ -23,6 +23,18 @@ npm run dev
 ```
 
 Acesse: [http://localhost:3000](http://localhost:3000)
+
+## Scripts disponíveis
+
+```bash
+npm run dev
+npm run build
+npm start
+```
+
+- `npm run dev`: inicia o servidor em desenvolvimento.
+- `npm run build`: compila o TypeScript para a pasta `dist`.
+- `npm start`: executa a versão compilada.
 
 ## Funcionalidades
 
