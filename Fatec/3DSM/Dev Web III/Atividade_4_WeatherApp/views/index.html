@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WeatherApp - Consulta do Clima</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="sky-scene" aria-hidden="true">
+      <span class="sun-orb"></span>
+      <span class="cloud cloud-a"></span>
+      <span class="cloud cloud-b"></span>
+      <span class="cloud cloud-c"></span>
+      <span class="sparkle sparkle-a"></span>
+      <span class="sparkle sparkle-b"></span>
+      <span class="sparkle sparkle-c"></span>
+    </div>
+
+    <main class="container">
+      <section class="hero-card" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">previsao instantanea</p>
+          <h1 id="page-title">Consulta do Clima</h1>
+          <p>
+            Digite o nome da cidade e acompanhe as condicoes atuais com uma
+            experiencia visual inspirada em apps profissionais de meteorologia.
+          </p>
+        </div>
+      </section>
+
+      <form id="weather-form" class="search-form">
+        <div class="input-shell">
+          <span class="input-icon" aria-hidden="true">?</span>
+          <input
+            id="city-input"
+            type="text"
+            placeholder="Ex.: São Paulo"
+            autocomplete="off"
+          />
+        </div>
+        <button type="submit">
+          <span>Buscar</span>
+        </button>
+      </form>
+
+      <section id="feedback" class="feedback" aria-live="polite"></section>
+      <section id="result" class="result"></section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
